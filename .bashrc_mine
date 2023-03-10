@@ -6,6 +6,9 @@ HISTSIZE=3000
 HISTFILESIZE=9000
 
 # enable color prompt
+case "$TERM" in
+    xterm-color|*-256color) color_prompt=yes;;
+esac
 force_color_prompt=yes
 
 # set my multiline prompt
