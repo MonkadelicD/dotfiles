@@ -32,8 +32,3 @@ PROMPT_COMMAND="history -a"
 if [ -f /usr/local/bin/aws_completer ]; then
   complete -C '/usr/local/bin/aws_completer' aws
 fi
-
-# set packaging env vars for debian packaging
-DEBEMAIL="daryl@brit.com"
-DEBFULLNAME="Daryl Voss"
-export DEBEMAIL DEBFULLNAME
