@@ -4,6 +4,9 @@ alias uu='echo "Updating package repositories..."; sudo apt update && echo "Perf
 # git management of dot files
 alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 
+# git management for mcstart
+alias mcgit='/usr/bin/git --git-dir=$HOME/.mcstart --work-tree=$HOME/scripts'
+
 # customized default ls aliases
 alias ll='ls -hal'
 alias la='ls -Ah'
