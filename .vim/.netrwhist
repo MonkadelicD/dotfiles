@@ -1,7 +1,0 @@
-let g:netrw_dirhistmax  =10
-let g:netrw_dirhistcnt =5
-let g:netrw_dirhist_5='/home/daryl/network/sharedata/Daryl/ansible/brit-ansible/support-ansible'
-let g:netrw_dirhist_4='/home/daryl/Documents/Brit/AWS/us-east-2/terraform-global-vpc'
-let g:netrw_dirhist_3='/home/daryl/Documents/Brit/wiki-procedures'
-let g:netrw_dirhist_2='/home/daryl/.ansible/roles/willshersystems.sshd/tasks'
-let g:netrw_dirhist_1='/media/daryl/network/install/SSL Certs/BRIT_CERTS/brit.com expires 2022'
