@@ -1,0 +1,14 @@
+# Creates a Window with my standard panels for SysAdmin work.
+# At-home:
+new-session -s At-Home
+new-window -n SysAdmin
+split-window -h -p 35 htop
+split-window -v -p 70
+select-pane -t 2
+send-keys 'uu' C-m
+select-pane -t 0
+split-window -v -p 80
+select-pane -t 0
+split-window -h -p 35
+clock
+select-pane -t 2

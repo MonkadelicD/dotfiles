@@ -1,0 +1,37 @@
+# Creates 3 Windows for work. 1=SysAdmin, 2=Terraform - global-vpc, 3=Terraform - infra-vpc
+# At-Work:
+new-session -s At-Work
+new-window -n SysAdmin
+split-window -h -p 35 htop
+split-window -v -p 70
+split-window -v -p 50
+split-window -v -p 50
+select-pane -t 2
+send-keys 'uu' C-m
+select-pane -t 3
+send-keys 'cd ~/Documents/Brit/AWS/former2; git pull' C-m
+send-keys 'docker compose up former2'
+select-pane -t 4
+send-keys 'vpn-connect.sh'
+select-pane -t 0
+split-window -v -p 80
+select-pane -t 0
+split-window -h -p 35
+clock
+select-pane -t 6
+
+new-window -n 'Terraform - global-vpc'
+split-window -v -p 20
+select-pane -t 0
+setw synchronize-panes
+send-keys 'cd ~/Documents/Brit/AWS/us-east-2/terraform-global-vpc' C-m
+setw synchronize-panes
+send-keys 'ls -1q *.tf' C-m
+
+new-window -n 'Terraform - infra-vpc'
+split-window -v -p 20
+select-pane -t 0
+setw synchronize-panes
+send-keys 'cd ~/Documents/Brit/AWS/us-east-2/terraform-new-vpc' C-m
+setw synchronize-panes
+send-keys 'ls -1q *.tf' C-m
