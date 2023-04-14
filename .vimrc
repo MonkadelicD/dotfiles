@@ -15,8 +15,16 @@ set visualbell
 "Show file stats
 set ruler
 
+"Enable autoindent
+set autoindent
+
 "2-space indentation for yaml files
-autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
+"autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
+
+"2-space indentation for all scripts/languages
+set expandtab
+set tabstop=2
+set shiftwidth=2
 
 "Indentation lines for tabs
 set list lcs=tab:\⦙\ 
