@@ -32,3 +32,7 @@ PROMPT_COMMAND="history -a"
 if [ -f /usr/local/bin/aws_completer ]; then
   complete -C '/usr/local/bin/aws_completer' aws
 fi
+
+# set EDITOR to vim
+export EDITOR='vim'
+export VISUAL='vim'
