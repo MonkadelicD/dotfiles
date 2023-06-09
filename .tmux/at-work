@@ -20,18 +20,26 @@ split-window -h -p 35
 clock
 select-pane -t 6
 
-new-window -n 'Terraform - global-vpc'
+new-window -n 'Terraform IDE'
+send-keys 'export S=trfrm' C-m
+send-keys 'clear' C-m
 split-window -v -p 20
 select-pane -t 0
+split-window -h -p 80
 setw synchronize-panes
 send-keys 'cd ~/Documents/Brit/AWS/us-east-2/terraform-global-vpc' C-m
+send-keys 'clear' C-m
 setw synchronize-panes
-send-keys 'ls -1q *.tf' C-m
-
-new-window -n 'Terraform - infra-vpc'
-split-window -v -p 20
+send-keys 'vim --servername trfrm' C-m
 select-pane -t 0
-setw synchronize-panes
-send-keys 'cd ~/Documents/Brit/AWS/us-east-2/terraform-new-vpc' C-m
-setw synchronize-panes
-send-keys 'ls -1q *.tf' C-m
+send-keys 'ranger' C-m
+
+select-window -t 1
+
+#new-window -n 'Terraform - infra-vpc'
+#split-window -v -p 20
+#select-pane -t 0
+#setw synchronize-panes
+#send-keys 'cd ~/Documents/Brit/AWS/us-east-2/terraform-new-vpc' C-m
+#setw synchronize-panes
+#send-keys 'ls -1q *.tf' C-m
