@@ -1,38 +1,52 @@
 # Creates 3 Windows for work. 1=SysAdmin, 2=Terraform - global-vpc, 3=Terraform - infra-vpc
-# At-Work:
-new-session -s At-Work
-new-window -n SysAdmin
-split-window -h -p 35 htop
-split-window -v -p 70
-#split-window -v -p 50
-#split-window -v -p 50
-#select-pane -t 2
-#send-keys 'uu' C-m
-#select-pane -t 3
-#send-keys 'cd ~/Documents/Brit/AWS/former2; git pull' C-m
-#send-keys 'docker compose up former2'
-#select-pane -t 4
-#send-keys 'vpn-connect.sh'
-select-pane -t 0
-split-window -v -p 80
-select-pane -t 0
-split-window -h -p 35
-clock
-select-pane -t 2
+# Default:
 
+# Create a new tmux session and name it.
+new-session -s Ds-Tmux
+# create a new window with a name to display in the status bar.
+new-window -n SysAdmin
+# create a new pane using 35% of the full width and start htop.
+split-window -h -p 35 htop
+# create a new pane under the htop process using 70% of the height.
+split-window -v -p 70
+# select the main pane to the left.
+select-pane -t 0
+# create a new pane on the bottom using 80% of the height.
+split-window -v -p 80
+# select the main pane in the top left.
+select-pane -t 0
+# create a new pane using 35% of the top left pane.
+split-window -h -p 35
+# run the tmux clock app.
+clock
+
+# create another window and name it.
 new-window -n 'Terminal IDE'
+# Enter commands to create a S constant for vimserver to use then clear the screen.
 send-keys 'export S=trfrm' C-m
 send-keys 'clear' C-m
+# create a new pane at the bottom of the window using 20% of the vertical space.
 split-window -v -p 20
+# select the top-left pane.
 select-pane -t 0
+# create a new pane to the right using 80% of the horizontal space.
 split-window -h -p 80
+# enable sending input to all panes in this window.
 setw synchronize-panes
+# change directory and clear the screen.
 send-keys 'cd ~/Documents' C-m
 send-keys 'clear' C-m
+# disable sending input to all panes in this window.
 setw synchronize-panes
+# start vim in server mode in the large pane in the current pane (top-right of window).
 send-keys 'vim --servername trfrm' C-m
+# select the top-left pane.
 select-pane -t 0
+# start ranger
 send-keys 'ranger' C-m
 
+# view the first window created
 select-window -t 1
+# select the pane in the bottom-left.
+select-pane -t 5
 
