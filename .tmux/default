@@ -1,4 +1,4 @@
-# Creates 3 Windows for work. 1=SysAdmin, 2=Terraform - global-vpc, 3=Terraform - infra-vpc
+# Creates 2 Windows. 1=SysAdmin, 2=VIM IDE
 # Default:
 
 # Create a new tmux session and name it.

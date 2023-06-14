@@ -1,4 +1,4 @@
-# Creates 3 Windows for work. 1=SysAdmin, 2=Terraform - global-vpc, 3=Terraform - infra-vpc
+# Creates 2 Windows for work. 1=SysAdmin, 2=VIM IDE
 # At-Work:
 new-session -s At-Work
 new-window -n SysAdmin
@@ -9,7 +9,7 @@ split-window -v -p 70
 #select-pane -t 2
 #send-keys 'uu' C-m
 #select-pane -t 3
-#send-keys 'cd ~/Documents/Brit/AWS/former2; git pull' C-m
+#send-keys 'cd ~/Documents/BLAH/AWS/former2; git pull' C-m
 #send-keys 'docker compose up former2'
 #select-pane -t 4
 #send-keys 'vpn-connect.sh'

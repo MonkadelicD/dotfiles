@@ -28,7 +28,7 @@ fi
 export HISTTIMEFORMAT="%C%y%m%d%H%M%S: "
 PROMPT_COMMAND="history -a"
 
-# enable command completion or aws cli if present
+# enable command completion for aws cli if present
 if [ -f /usr/local/bin/aws_completer ]; then
   complete -C '/usr/local/bin/aws_completer' aws
 fi
