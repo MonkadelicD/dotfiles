@@ -18,7 +18,7 @@ select-pane -t 0
 # create a new pane using 35% of the top left pane.
 split-window -h -p 35
 # run the tmux clock app.
-clock
+clock-mode -t 1
 
 # create another window and name it.
 new-window -n 'Terminal IDE'
@@ -40,10 +40,8 @@ send-keys 'clear' C-m
 setw synchronize-panes
 # start vim in server mode in the large pane in the current pane (top-right of window).
 send-keys 'vim --servername trfrm' C-m
-# select the top-left pane.
-select-pane -t 0
 # start ranger
-send-keys 'ranger' C-m
+send-keys -t 0 'ranger' C-m
 
 # view the first window created
 select-window -t 1
