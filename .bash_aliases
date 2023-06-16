@@ -22,7 +22,7 @@ alias l='ls -CFh'
 # call custom tmux layouts
 alias tmux-work='tmux new-session "tmux source-file ~/.tmux/at-work"'
 alias tmux-home='tmux new-session "tmux source-file ~/.tmux/at-home"'
-alias tmux='tmux new-session "tmux source-file ~/.tmux/default"'
+alias tmux-start='tmux new-session "tmux source-file ~/.tmux/default"'
 
 # use python3
 alias python='python3'
