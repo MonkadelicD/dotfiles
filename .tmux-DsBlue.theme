@@ -10,30 +10,42 @@ setw -g monitor-activity on
 set -g bell-action current
 
 #  modes
-setw -g clock-mode-colour colour5
+  # colour6=teal
+setw -g clock-mode-colour colour6
+  # colour1=maroon, colour18=darkblue
 setw -g mode-style 'fg=colour1 bg=colour18 bold'
 
 # panes
-set -g pane-border-style 'fg=colour19 bg=colour0'
-set -g pane-active-border-style 'bg=colour0 fg=colour9'
+  # colour18=darkblue
+set -g pane-border-style 'fg=color18 bg=black'
+  # colour9=red
+set -g pane-active-border-style 'bg=black fg=colour9'
 
 # statusbar
 set -g status-interval 2
 set -g status-position bottom
 set -g status-justify left
+  # colour26=dodgerblue3, colour137=lightsalmon3
 set -g status-style 'bg=colour26 fg=colour137 dim'
 set -g status-left ''
+  # colour234=grey11, colour243=grey46, colour233=grey7, colour8=grey
 set -g status-right '#[fg=colour234,bg=colour243] %m/%d #[fg=colour233,bg=colour8] %H:%M:%S '
 set -g status-right-length 50
 set -g status-left-length 20
 
+  # colour3=olive, colour88=darkred
 setw -g window-status-current-style 'fg=colour3 bg=colour88 bold'
+  # colour11=yellow
 setw -g window-status-current-format ' #I#[fg=colour11]:#[fg=colour11]#W#[fg=colour11]#F '
 
+  # colour9=red, colour18=darkblue
 setw -g window-status-style 'fg=colour9 bg=colour18'
+  # colour249=grey70, colour250=grey74
 setw -g window-status-format ' #I#[fg=colour249]:#[fg=colour250]#W#[fg=colour249]#F '
 
+  # colour255=grey93, colour1=maroon
 setw -g window-status-bell-style 'fg=colour255 bg=colour1 bold'
 
 # messages
+  # colour250=grey74, colour4=navy
 set -g message-style 'fg=colour250 bg=colour4 bold'
