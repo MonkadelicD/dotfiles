@@ -9,10 +9,16 @@ new-window -n SysAdmin
 split-window -h -p 35 htop
 # create a new pane under the htop process using 70% of the height.
 split-window -v -p 70
+# run update using 'uu' alias
+send-keys 'uu' C-m
 # select the main pane to the left.
 select-pane -t 0
+# start synergy as a background process
+send-keys 'synergy &' C-m
 # create a new pane on the bottom using 80% of the height.
 split-window -v -p 80
+# create new pane along bottom of the large pane
+split-window -v -p 10
 # select the main pane in the top left.
 select-pane -t 0
 # create a new pane using 35% of the top left pane.
@@ -34,7 +40,7 @@ split-window -h -p 80
 # enable sending input to all panes in this window.
 setw synchronize-panes
 # change directory and clear the screen.
-send-keys 'cd ~/Documents' C-m
+#send-keys 'cd ~/Documents' C-m
 send-keys 'clear' C-m
 # disable sending input to all panes in this window.
 setw synchronize-panes
@@ -45,6 +51,9 @@ send-keys -t 0 'ranger' C-m
 
 # view the first window created
 select-window -t 1
-# select the pane in the bottom-left.
-select-pane -t 5
-
+# select the pane in the top-left.
+select-pane -t 0
+# enter command to start work backup
+send-keys 'backupwork'
+# select main pane (#2)
+selecte-pane -t 2

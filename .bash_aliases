@@ -14,6 +14,9 @@ alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 # git management for mcstart
 alias mcgit='/usr/bin/git --git-dir=$HOME/.mcstart --work-tree=$HOME/scripts'
 
+# git management of hib terraform
+alias hib-git='/usr/bin/git --git-dir=/home/daryl/lanshares/sharedata/Daryl/terraform/.git-hib-setup/ --work-tree=/home/daryl/lanshares/sharedata/Daryl/terraform/'
+
 # customized default ls aliases
 alias ll='ls -hal'
 alias la='ls -Ah'

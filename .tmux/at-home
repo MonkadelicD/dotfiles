@@ -2,6 +2,7 @@
 # At-home:
 new-session -s At-Home
 new-window -n SysAdmin
+send-keys 'synergy &' C-m
 split-window -h -p 35 htop
 split-window -v -p 70
 select-pane -t 2
