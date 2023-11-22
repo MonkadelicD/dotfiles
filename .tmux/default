@@ -18,7 +18,7 @@ send-keys 'synergy &' C-m
 # create a new pane on the bottom using 80% of the height.
 split-window -v -p 80
 # create new pane along bottom of the large pane
-split-window -v -p 10
+split-window -v -p 9
 # select the main pane in the top left.
 select-pane -t 0
 # create a new pane using 35% of the top left pane.
@@ -28,15 +28,18 @@ clock-mode -t 1
 
 # create another window and name it.
 new-window -n 'Terminal IDE'
-# Enter commands to create a S constant for vimserver to use then clear the screen.
-send-keys 'export S=trfrm' C-m
-send-keys 'clear' C-m
 # create a new pane at the bottom of the window using 20% of the vertical space.
 split-window -v -p 20
+# create a new pane using 40% of the bottom pane
+split-window -h -p 40
 # select the top-left pane.
 select-pane -t 0
 # create a new pane to the right using 80% of the horizontal space.
 split-window -h -p 80
+# create new pane for clock
+select-pane -t 0
+clock
+split-window -v -p 80
 # enable sending input to all panes in this window.
 setw synchronize-panes
 # change directory and clear the screen.
@@ -45,9 +48,11 @@ send-keys 'clear' C-m
 # disable sending input to all panes in this window.
 setw synchronize-panes
 # start vim in server mode in the large pane in the current pane (top-right of window).
-send-keys 'vim --servername trfrm' C-m
+send-keys -t 2 'vim --servername trfrm' C-m
+# Enter commands to create a S constant for Ranger to use with vimserver
+send-keys -t 1 'export S=trfrm' C-m
 # start ranger
-send-keys -t 0 'ranger' C-m
+send-keys -t 1 'ranger' C-m
 
 # view the first window created
 select-window -t 1
@@ -56,4 +61,4 @@ select-pane -t 0
 # enter command to start work backup
 send-keys 'backupwork'
 # select main pane (#2)
-selecte-pane -t 2
+select-pane -t 2
