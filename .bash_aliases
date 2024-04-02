@@ -23,9 +23,9 @@ alias la='ls -Ah'
 alias l='ls -CFh'
 
 # call custom tmux layouts
-alias tmux-work='tmux new-session "tmux source-file ~/.tmux/at-work"'
-alias tmux-home='tmux new-session "tmux source-file ~/.tmux/at-home"'
-alias tmux-start='tmux new-session "tmux source-file ~/.tmux/default"'
+alias tmux-work='tmux new-session -s "Ds-Work" -n SysAdmin'
+alias tmux-home='tmux new-session -s "Ds-Home" -n SysAdmin'
+alias tmux-start='tmux new-session -s "Ds-Sess" -n SysAdmin'
 
 # use python3
 alias python='python3'
