@@ -1,15 +1,25 @@
-# Creates a Window with my standard panels for SysAdmin work.
-# At-home:
-new-session -s At-Home
-new-window -n SysAdmin
-send-keys 'synergy &' C-m
-split-window -h -p 35 htop
-split-window -v -p 70
-select-pane -t 2
+# Creates 2 Windows. 1=SysAdmin, 2=VIM IDE
+# Default:
+
+# create a new pane using 35% of the full width and start htop.
+split-window -h -l 35% htop
+# create a new pane under the htop process using 70% of the height.
+split-window -v -l 70%
+# run update using 'uu' alias
 send-keys 'uu' C-m
+# select the main pane to the left.
 select-pane -t 0
-split-window -v -p 80
+# start synergy as a background process
+send-keys 'synergy &' C-m
+# create a new pane on the bottom using 80% of the height.
+split-window -v -l 80%
+# create new pane along bottom of the large pane
+split-window -v -l 17%
+# select the main pane in the top left.
 select-pane -t 0
-split-window -h -p 35
-clock
+# create a new pane using 35% of the top left pane.
+split-window -h -l 35%
+# run the tmux clock app.
+select-pane -t 1
+clock-mode
 select-pane -t 2
