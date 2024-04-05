@@ -19,7 +19,7 @@ send-keys 'clear' C-m
 # disable sending input to all panes in this window.
 setw synchronize-panes
 # start vim in server mode in the large pane in the current pane (top-right of window).
-send-keys -t 2 'vim --servername termIde2 C-m
+send-keys -t 2 'vim --servername termIde2' C-m
 # Enter commands to create a S constant for Ranger to use with vimserver
 send-keys -t 1 'export S=termIde2' C-m
 # start ranger
