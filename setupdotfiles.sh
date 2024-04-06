@@ -76,7 +76,7 @@ EOF
   fi
 
   # copy bash files to .bashrc.d directory
-  for rc_file in "${bashrc_configs[@]}"; do
+  for rc_file in ${bashrc_configs[@]}; do
     # if the file already exists, remove it first.
     if [ -e "$rc_file" ]; then
       rm -rf "$rc_file"
@@ -95,7 +95,7 @@ tmux_configs=("$(ls -1d .tmux*)")
 # Find all tmux related stuff
 if [ "${#tmux_file[@]}" -gt 0 ]; then
   # loop through each item found
-  for tmux_file in "${tmux_configs[@]}"; do
+  for tmux_file in ${tmux_configs[@]}; do
     # if it's a directory copy recursively
     if [ -d "$tmux_file" ]; then
       cp -r "$tmux_file" "$HOME"/
