@@ -11,7 +11,7 @@ elif [[ $ID == "fedora" ]] || [[ $ID == "rhel" ]]; then
 fi
 
 # git management of dot files
-alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/'
 
 # git management for mcstart
 alias mcgit='/usr/bin/git --git-dir=$HOME/.mcstart --work-tree=$HOME/scripts'
@@ -31,4 +31,3 @@ alias tmux-start='tmux new-session -s "Ds-Sess" -n SysAdmin'
 
 # use python3
 alias python='python3'
-
