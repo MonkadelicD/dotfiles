@@ -29,7 +29,7 @@ set -g status-justify left
 set -g status-style 'bg=colour26 fg=colour137 dim'
 set -g status-left ''
   # colour234=grey11, colour243=grey46, colour233=grey7, colour8=grey
-set -g status-right '#[fg=colour234,bg=colour243] %m/%d #[fg=colour233,bg=colour8] %H:%M:%S '
+set -g status-right '#[fg=green]#($TMUX_PLUGIN_MANAGER_PATH/tmux-mem-cpu-load/tmux-mem-cpu-load --colors --powerline-right --interval 2)#[default]'
 set -g status-right-length 50
 set -g status-left-length 20
 

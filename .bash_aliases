@@ -6,6 +6,8 @@ fi
 
 if [[ $ID == "ubuntu" ]] || [[ $ID == "debian" ]] || [[ $ID == "linuxmint" ]]; then
 	alias uu='echo "Updating package repositories..."; sudo apt update && echo "Performing dist-upgrade..."; sudo apt -y upgrade && echo "Removing unecessary packages..."; sudo apt -y autoremove && echo "Cleaning up local package repositories..."; sudo apt -y autoclean'
+elif [[ $ID == "fedora" ]] || [[ $ID == "rhel" ]]; then
+  alias uu='echo "Updating package repositories..."; sudo dnf check-update && echo "Performing package upgrades..."; sudo dnf upgrade -y && echo "Removing unecessary packages..."; sudo dnf autoremove -y'
 fi
 
 # git management of dot files
