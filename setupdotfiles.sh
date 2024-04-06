@@ -62,8 +62,10 @@ if [ "${#bashrc_configs[@]}" -gt 0 ]; then
       mkdir "$HOME"/.bashrc.d || { echo "Error creating directory: $HOME/.bashrc.d"; exit 1; }
     fi
 
+  # if the following block isn't present insert it
   # this is taken from the default user .bashrc in Fedora 32
-    cat << 'EOF' >> "$HOME"/.bashrc
+    if [ grep SETUPDOTFILES.SH "$HOME"/.bashrc ]; then
+      cat << 'EOF' >> "$HOME"/.bashrc
 ## BEGIN BLOCK BY SETUPDOTFILES.SH
 if [ -d ~/.bashrc.d ]; then
     for rc in ~/.bashrc.d/*; do
@@ -75,6 +77,7 @@ fi
 unset rc
 ## END BLOCK BY SETUPDOTFILES.SH
 EOF
+    fi
   fi
 
   # copy bash files to .bashrc.d directory
@@ -123,10 +126,12 @@ if [ ! -d "$HOME"/.vim ]; then
 fi
 
 # install indentLine vim plugin
+rm -rf ~/.vim/pack/vendor/start/indentLine
 git clone https://github.com/Yggdroot/indentLine.git ~/.vim/pack/vendor/start/indentLine
 vim -u NONE -c "helptags  ~/.vim/pack/vendor/start/indentLine/doc" -c "q"
 
 # install vim-terraform plugin
+rm -rf ~/.vim/pack/plugins/start/vim-terraform
 git clone https://github.com/hashivim/vim-terraform.git ~/.vim/pack/plugins/start/vim-terraform
 
 ## END VIM CUSTOMIZATIONS
