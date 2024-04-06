@@ -64,6 +64,7 @@ if [ "${#bashrc_configs[@]}" -gt 0 ]; then
 
   # this is taken from the default user .bashrc in Fedora 32
     cat << 'EOF' >> "$HOME"/.bashrc
+## BEGIN BLOCK BY SETUPDOTFILES.SH
 if [ -d ~/.bashrc.d ]; then
     for rc in ~/.bashrc.d/*; do
         if [ -f "$rc" ]; then
@@ -72,14 +73,15 @@ if [ -d ~/.bashrc.d ]; then
     done
 fi
 unset rc
+## END BLOCK BY SETUPDOTFILES.SH
 EOF
   fi
 
   # copy bash files to .bashrc.d directory
   for rc_file in ${bashrc_configs[@]}; do
     # if the file already exists, remove it first.
-    if [ -e "$rc_file" ]; then
-      rm -rf "$rc_file"
+    if [ -e "$HOME"/"$rc_file" ]; then
+      rm -rf "$HOME"/"$rc_file"
     fi
     cp "$rc_file" "$HOME"/.bashrc.d/ ||  { echo "Error copying $rc_file to $HOME/.bashrc.d"; exit 1; }
   done
