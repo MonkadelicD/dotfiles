@@ -6,7 +6,7 @@
 set -x
 
 ## BEGIN VARIABLES
-dtfls_rc_add="[ -r ~/.myshell ] && source ~/.myshell"
+dtfls_rc_add="[ -r ~/.bashrc.sh ] && source ~/.bashrc.d"
 
 # create variables to hold markers for config blocks managed by this script
 dtfls_mng_head="### BEGIN DOTFILES MANAGED BLOCK"
