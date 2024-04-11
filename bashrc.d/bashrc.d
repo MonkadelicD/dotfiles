@@ -1,1 +1,0 @@
-/home/daryl/dotfiles/bashrc.d

@@ -103,8 +103,16 @@ if [ "${#bashrc_configs[@]}" -gt 0 ]; then
 fi
 
 # create or replace a softlink to our bashrc.sh script and config file directory
-ln -sf "$HOME/dotfiles/bashrc.sh" "$HOME/.bashrc.sh"
-ln -sf "$HOME/dotfiles/bashrc.d" "$HOME/.bashrc.d"
+# remove an existing soft link
+if [ -h "$HOME"/.bashrc.sh ]; then
+  unlink "$HOME"/.bashrc.sh
+fi
+ln -sf "$HOME"/dotfiles/bashrc.sh "$HOME"/.bashrc.sh
+# remove an existing soft link
+if [ -h "$HOME"/.bashrc.d ]; then
+  unlink "$HOME"/.bashrc.d
+fi
+ln -sf "$HOME"/dotfiles/bashrc.d "$HOME"/.bashrc.d
 
 ## END BASH CUSTOMIZATIONS
 
