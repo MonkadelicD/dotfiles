@@ -2,7 +2,6 @@
 # configuration and should be able to be sourced from any Bash-like shell or
 # from Z shell.
 
-set -x
 # If we are not running interactively do not continue loading this file.
 case $- in
     *i*) ;;
@@ -16,5 +15,3 @@ if [ -x .bashrc.d ]; then
   done
   unset bashrc_file
 fi
-
-set +x
