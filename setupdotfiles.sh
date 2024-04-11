@@ -151,3 +151,6 @@ rm -rf ~/.vim/pack/plugins/start/vim-terraform
 git clone https://github.com/hashivim/vim-terraform.git ~/.vim/pack/plugins/start/vim-terraform
 
 ## END VIM CUSTOMIZATIONS
+echo "All done!"
+echo "To activeate shell customizations run:"
+echo "        source ~/.bashrc.sh"
