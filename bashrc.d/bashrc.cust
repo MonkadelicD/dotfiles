@@ -9,7 +9,6 @@ HISTFILESIZE=9000
 case "$TERM" in
     xterm-color|*-256color) color_prompt=yes;;
 esac
-force_color_prompt=yes
 
 # set a variable with the parent process of the session
 sessParent=$(ps -o comm= -p $PPID)

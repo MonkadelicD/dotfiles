@@ -3,10 +3,11 @@
 ## Automate configuration of dotfiles, ie:
 ## create .bashrc.d if not present and place bash customizations
 ## there. Also add stanza to .bashrc to look in .bashrc.d if not present
-set -x
 
 ## BEGIN VARIABLES
-dtfls_rc_add="[ -r ~/.bashrc.sh ] && source ~/.bashrc.d"
+
+# variable containing line to source customized bash script
+dtfls_rc_add="[ -r ~/.bashrc.sh ] && source ~/.bashrc.sh"
 
 # create variables to hold markers for config blocks managed by this script
 dtfls_mng_head="### BEGIN DOTFILES MANAGED BLOCK"
@@ -31,12 +32,12 @@ script_dir=$(dirname "$0")
 
 ## BEGIN FUNCTIONS
 
-# DNF check for upgradable packages and install the package passed as an argument
+# DNF install the package passed as an argument
 run_dnf () {
-sudo dnf check-update && sudo dnf install -y "$1"
+sudo dnf install -y "$1"
 }
 
-# APT check for upgradable packages and install the package passed as an argument
+# APT update package cache and install the package passed as an argument
 run_apt () {
 sudo apt update && sudo apt install -y "$1"
 }
@@ -45,14 +46,19 @@ sudo apt update && sudo apt install -y "$1"
 
 ## BEGIN PREREQUISITES
 
+##TODO I could probably find a better way to do this but this works on all distros
+# see if git command is missing from paths
 if [[ ! "$(which git)" ]]; then
+  # Install with apt or dnf
   if [ "$pkg_mngr" == apt ]; then
     run_apt git
   elif [ "$pkg_mngr" == dnf ]; then
     run_dnf git
   fi
 fi
+# see if vim command is missing from paths
 if [[ ! "$(which vim)" ]]; then
+  # install wtih apt or dnf
   if [ "$pkg_mngr" == apt ]; then
     run_apt vim 
   elif [ "$pkg_mngr" == dnf ]; then
@@ -85,15 +91,21 @@ if [ "${#bashrc_configs[@]}" -gt 0 ]; then
       echo "$dtfls_rc_add" >> "$HOME"/.bashrc
       echo "$dtfls_mng_tail" >> "$HOME"/.bashrc
     else
-      # change the text between the markers but leave the markers
-      sed -i  "s/($dtfls_mng_head\\n).*(\\n$dtfls_mng_tail)/\$1$dtfls_rc_add\$2/s" "$HOME"/.bashrc
+      # delete managed block if found
+      sed -i "/$dtfls_mng_head/,/$dtfls_mng_tail/{/.*/d;}" "$HOME"/.bashrc
+      # write the managed block back in with header and footer markers
+      echo "$dtfls_mng_head" >> "$HOME"/.bashrc
+      echo "# source my custom bash stuffs" >> "$HOME"/.bashrc
+      echo "$dtfls_rc_add" >> "$HOME"/.bashrc
+      echo "$dtfls_mng_tail" >> "$HOME"/.bashrc
     fi
   fi
 fi
 
 # create or replace a softlink to our bashrc.sh script and config file directory
 ln -sf "$HOME/dotfiles/bashrc.sh" "$HOME/.bashrc.sh"
-ln -sf "$HOME/dotfiles/shell.d" "$HOME/.shell.d"
+ln -sf "$HOME/dotfiles/bashrc.d" "$HOME/.bashrc.d"
+
 ## END BASH CUSTOMIZATIONS
 
 ## START TMUX CUSTOMIZATIONS
@@ -139,4 +151,3 @@ rm -rf ~/.vim/pack/plugins/start/vim-terraform
 git clone https://github.com/hashivim/vim-terraform.git ~/.vim/pack/plugins/start/vim-terraform
 
 ## END VIM CUSTOMIZATIONS
-set +x
