@@ -3,7 +3,7 @@
 ## Automate configuration of dotfiles, ie:
 ## create .bashrc.d if not present and place bash customizations
 ## there. Also add stanza to .bashrc to look in .bashrc.d if not present
-
+set -x
 ## BEGIN VARIABLES
 
 # variable containing line to source customized bash script
@@ -120,18 +120,18 @@ fi
 ## START TMUX CUSTOMIZATIONS
 
 # Create an array of tmux config files
-tmux_configs=("$(ls -1d .tmux*)")
+tmux_configs=($(ls -1d .tmux*))
 
 # Find all tmux related stuff
-if [ "${#tmux_file[@]}" -gt 0 ]; then
+if [ "${#tmux_configs[@]}" -gt 0 ]; then
   # loop through each item found
   for tmux_file in "${tmux_configs[@]}"; do
     # if it's a directory copy recursively
     if [ -d "$tmux_file" ]; then
-      cp -r "$tmux_file" "$HOME"/
+      cp -fr "$tmux_file" "$HOME"/
     # otherwise copy each file
     else
-      cp "$tmux_file" "$HOME"/
+      cp -f "$tmux_file" "$HOME"/
     fi
   done
 fi
@@ -163,3 +163,5 @@ git clone https://github.com/hashivim/vim-terraform.git ~/.vim/pack/plugins/star
 echo "All done!"
 echo "To activeate shell customizations run:"
 echo "        source ~/.bashrc.sh"
+
+set +x
