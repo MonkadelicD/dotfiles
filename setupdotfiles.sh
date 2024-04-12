@@ -3,7 +3,6 @@
 ## Automate configuration of dotfiles, ie:
 ## create .bashrc.d if not present and place bash customizations
 ## there. Also add stanza to .bashrc to look in .bashrc.d if not present
-set -x
 ## BEGIN VARIABLES
 
 # variable containing line to source customized bash script
@@ -163,5 +162,3 @@ git clone https://github.com/hashivim/vim-terraform.git ~/.vim/pack/plugins/star
 echo "All done!"
 echo "To activeate shell customizations run:"
 echo "        source ~/.bashrc.sh"
-
-set +x
