@@ -109,10 +109,11 @@ if [ -h "$HOME"/.bashrc.sh ]; then
 fi
 ln -sf "$HOME"/dotfiles/bashrc.sh "$HOME"/.bashrc.sh
 # remove an existing soft link
-if [ -h "$HOME"/.bashrc.d ]; then
-  unlink "$HOME"/.bashrc.d
+if [ -x "$HOME"/.bashrc.d ]; then
+  cp -f ./bashrc.d/* "$HOME"/.bashrc.d/
+else
+  ln -sf "$HOME"/dotfiles/bashrc.d "$HOME"/.bashrc.d
 fi
-ln -sf "$HOME"/dotfiles/bashrc.d "$HOME"/.bashrc.d
 
 ## END BASH CUSTOMIZATIONS
 
