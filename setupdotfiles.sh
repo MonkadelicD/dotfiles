@@ -64,6 +64,15 @@ if [[ ! "$(which vim)" ]]; then
     run_dnf vim
   fi
 fi
+# see if tmux command is missing from paths
+if [[ ! "$(which tmux)" ]]; then
+  # install wtih apt or dnf
+  if [ "$pkg_mngr" == apt ]; then
+    run_apt tmux 
+  elif [ "$pkg_mngr" == dnf ]; then
+    run_dnf tmux
+  fi
+fi
 
 ## END PREREQUISITES
 
