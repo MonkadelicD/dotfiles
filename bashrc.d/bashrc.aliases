@@ -11,9 +11,9 @@ elif [[ $ID == "fedora" ]] || [[ $ID == "rhel" ]]; then
 fi
 
 # customized default ls aliases
-alias ll='ls -hal'
+alias ll='ls -hAl'
 alias la='ls -Ah'
-alias l='ls -CFh'
+alias l='ls -CFAh'
 
 # call custom tmux layouts
 alias tmux-work='tmux new-session -s "Ds-Work" -n SysAdmin'
