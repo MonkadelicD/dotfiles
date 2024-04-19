@@ -18,7 +18,7 @@ if [ -e /etc/os-release ]; then
 fi
 if [[ "$ID" == "ubuntu" ]] || [[ "$ID" == "debian" ]] || [[ "$ID" == "linuxmint" ]]; then
   pkg_mngr="apt"
-elif [[ "$ID" == "fedora" ]] || [[ "$ID" == "rhel" ]]; then
+elif [[ "$ID" == "fedora" ]] || [[ "$ID" == "rhel" ]] || [[ "$ID" == "rocky" ]]; then
   pkg_mngr="dnf"
 else
   echo "Untested OS. Please verify and improve this script."
