@@ -3,7 +3,7 @@
 ## What's it do?
 This repo contains a script to add bash dotfiles customizations. It contains my preferred settings for VIM, TMUX, and some bash aliases. The settings have been tested on Ubuntu 18.04-22.04, Linux Mint 18.0-21.3, Fedora 38, RHEL 9.1-9.3
 
-git, vim, and tmux packages will be installed if not found in the current user's path. (I'll probably change this to just look for the executable in /usr/bin/).
+git, vim, and tmux packages will be installed if not found in /usr/bin/.
 
 For bash, the only file that will be modified is the user's .bashrc file. A line will be added to run .bashrc.sh script which sources the aliases and bash customizations from .bashrc.d. All files stay in the dotfiles directory and soft links are created for ~/.bashrc.d and ~/.bashrc.sh
 

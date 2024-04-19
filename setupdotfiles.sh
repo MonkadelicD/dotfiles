@@ -45,9 +45,8 @@ sudo apt update && sudo apt install -y "$1"
 
 ## BEGIN PREREQUISITES
 
-##TODO I could probably find a better way to do this but this works on all distros
-# see if git command is missing from paths
-if [[ ! "$(which git)" ]]; then
+# Ensure git is installed
+if [[ ! -x /usr/bin/git ]]; then
   # Install with apt or dnf
   if [ "$pkg_mngr" == apt ]; then
     run_apt git
@@ -55,8 +54,8 @@ if [[ ! "$(which git)" ]]; then
     run_dnf git
   fi
 fi
-# see if vim command is missing from paths
-if [[ ! "$(which vim)" ]]; then
+# Ensure vim is installed
+if [[ ! -x /usr/bin/vim ]]; then
   # install wtih apt or dnf
   if [ "$pkg_mngr" == apt ]; then
     run_apt vim 
@@ -64,8 +63,8 @@ if [[ ! "$(which vim)" ]]; then
     run_dnf vim
   fi
 fi
-# see if tmux command is missing from paths
-if [[ ! "$(which tmux)" ]]; then
+# Ensure tmux is installed
+if [[ ! -x /usr/bin/tmux ]]; then
   # install wtih apt or dnf
   if [ "$pkg_mngr" == apt ]; then
     run_apt tmux 
