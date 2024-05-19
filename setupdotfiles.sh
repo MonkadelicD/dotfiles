@@ -8,6 +8,10 @@
 # variable containing line to source customized bash script
 dtfls_rc_add="[ -r ~/.bashrc.sh ] && source ~/.bashrc.sh"
 
+if [ $XDG_CURRENT_DESKTOP =~ .*gnome.* ]; then
+  PROFILE_ID=$(gsettings get org.gnome.Terminal.ProfilesList default)
+fi
+
 # create variables to hold markers for config blocks managed by this script
 dtfls_mng_head="### BEGIN DOTFILES MANAGED BLOCK"
 dtfls_mng_tail="### END DOTFILES MANAGED BLOCK"
@@ -123,6 +127,15 @@ else
 fi
 
 ## END BASH CUSTOMIZATIONS
+
+## START GNOME-TERMINAL CUSTOMIZATIONS
+
+# set gnome-terminal palette to modified solarized colors
+if [ -z "$PROFILE_ID" ]; then
+  gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:$PROFILE_ID/ palette "['#171421', '#c01c28', '#26a269', '#a2734c', '#12488b', '#a347ba', '#2aa1b3', '#d0cfcc', '#5e5c64', '#f66151', '#33da7a', '#e9ad0c', '#2a7bde', '#c061cb', '#33c7de', '#ffffff']"
+fi
+
+## END GNOME-TERMINAL CUSTOMIZATIONS
 
 ## START TMUX CUSTOMIZATIONS
 
