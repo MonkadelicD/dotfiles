@@ -3,12 +3,13 @@
 ## Automate configuration of dotfiles, ie:
 ## create .bashrc.d if not present and place bash customizations
 ## there. Also add stanza to .bashrc to look in .bashrc.d if not present
+
 ## BEGIN VARIABLES
 
 # variable containing line to source customized bash script
 dtfls_rc_add="[ -r ~/.bashrc.sh ] && source ~/.bashrc.sh"
 
-if [ $XDG_CURRENT_DESKTOP =~ .*gnome.* ]; then
+if [[ $XDG_CURRENT_DESKTOP =~ .*gnome.* ]]; then
   PROFILE_ID=$(gsettings get org.gnome.Terminal.ProfilesList default)
 fi
 
@@ -20,8 +21,7 @@ dtfls_mng_tail="### END DOTFILES MANAGED BLOCK"
 if [ -e /etc/os-release ]; then
   source /etc/os-release;
 fi
-if [[ "$ID" == "ubuntu" ]] || [[ "$ID" == "debian" ]] || [[ "$ID" == "linuxmint" ]]; then
-  pkg_mngr="apt"
+if [[ "$ID" == "ubuntu" ]] || [[ "$ID" == "debian" ]] || [[ "$ID" == "linuxmint" ]]; then pkg_mngr="apt"
 elif [[ "$ID" == "fedora" ]] || [[ "$ID" == "rhel" ]] || [[ "$ID" == "rocky" ]]; then
   pkg_mngr="dnf"
 else
@@ -29,7 +29,15 @@ else
   exit 1
 fi
 
+# What is the path to this script?
 script_dir=$(dirname "$0")
+
+# VIM paths
+vimIndentLinePath="$HOME"/.vim/pack/vendor/start/indentLine
+vimTerraformPath="$HOME"/.vim/pack/plugins/start/vim-terraform
+vimPolyglotPath="$HOME"/.vim/pack/plugins/start/vim-polyglot
+vimCocVimPath="$HOME"/.vim/pack/coc/start/coc.nvim
+vimDimColorSchemePath="$HOME"/.vim/pack/plugins/start/vim-dim
 
 ## END VARIABLES
 
@@ -58,6 +66,21 @@ if [[ ! -x /usr/bin/git ]]; then
     run_dnf git
   fi
 fi
+
+# Ensure node is present
+if [[ ! $(command -v node) ]]; then
+  # if not, verify nvm is present
+  if [[ ! $(command -v nvm ) ]]; then
+    export NVM_DIR="$HOME/.nvm" && rm -rf "$NVM_DIR" && (
+    git clone https://github.com/nvm-sh/nvm.git "$NVM_DIR"
+    cd "$NVM_DIR"
+    git checkout `git describe --abbrev=0 --tags --match "v[0-9]*" $(git rev-list --tags --max-count=1)`
+    ) && \. "$NVM_DIR/nvm.sh"
+  fi
+  # install latest LTS node
+  nvm install --lts
+fi
+
 # Ensure vim is installed
 if [[ ! -x /usr/bin/vim ]]; then
   # install wtih apt or dnf
@@ -67,6 +90,7 @@ if [[ ! -x /usr/bin/vim ]]; then
     run_dnf vim
   fi
 fi
+
 # Ensure tmux is installed
 if [[ ! -x /usr/bin/tmux ]]; then
   # install wtih apt or dnf
@@ -95,7 +119,7 @@ if [ "${#bashrc_configs[@]}" -gt 0 ]; then
 
   # if the following block isn't present insert it
   # this is taken from the default user .bashrc in Fedora 32
-    grep "$dtfls_mng_head" "$HOME"/.bashrc
+    grep -q "$dtfls_mng_head" "$HOME"/.bashrc
     bashrc_already_modified=$?
     if [ "$bashrc_already_modified" -gt 0 ]; then
       echo "$dtfls_mng_head" >> "$HOME"/.bashrc
@@ -160,42 +184,47 @@ fi
 
 ## BEGIN VIM CUSTOMIZATIONS
 
-# copy vimrc file if present
-if [ -f .vimrc ]; then
-  cp .vimrc "$HOME"/
-fi
-
 # if .vim directory is missing create it and the vendor and plugins directory trees
 if [ ! -d "$HOME"/.vim ]; then
   mkdir -p "$HOME"/.vim/pack/{plugins,vendor}/start
 fi
 
 # install indentLine vim plugin
-rm -rf ~/.vim/pack/vendor/start/indentLine
-git clone https://github.com/Yggdroot/indentLine.git ~/.vim/pack/vendor/start/indentLine
-vim -u NONE -c "helptags  ~/.vim/pack/vendor/start/indentLine/doc" -c "q"
+rm -rf "$vimIndentLinePath"
+git clone https://github.com/Yggdroot/indentLine.git "$vimIndentLinePath"
+vim -u NONE -c "helptags  $vimIndentLinePath/doc" -c "q"
 
 # install vim-terraform plugin
-rm -rf ~/.vim/pack/plugins/start/vim-terraform
-git clone https://github.com/hashivim/vim-terraform.git ~/.vim/pack/plugins/start/vim-terraform
+rm -rf "$vimTerraformPath"
+git clone https://github.com/hashivim/vim-terraform.git "$vimTerraformPath"
 
 # install vim-polyglot
-git clone --depth 1 https://github.com/sheerun/vim-polyglot ~/.vim/pack/plugins/start/vim-polyglot
+rm -rf "$vimPolyglotPath"
+git clone --depth 1 https://github.com/sheerun/vim-polyglot "$vimPolyglotPath"
 
 # install coc-nvim
-git clone --branch release https://github.com/neoclide/coc.nvim.git --depth=1 ~/.vim/pack/coc/start/coc.nvim
-vim -c "helptags coc.nvim/doc/ | q"
+rm -rf "$vimCocVimPath"
+git clone --branch release https://github.com/neoclide/coc.nvim.git --depth=1 "$vimCocVimPath"
+vim -c "helptags $vimCocVimPath/doc/ | q"
 # copy coc-settings.json
-cp .vim/coc-settings.json ~/.vim/
-
+cp -f .vim/coc-settings.json "$HOME"/.vim/
+cp -f .coc-vimrc "$HOME"/
 # install coc language servers
 vim -c "CocInstall coc-markdownlint coc-tsserver coc-json coc-html coc-css coc-pyright coc-yaml | q"
 
 # install terraform-lsp
-wget -qO- https://github.com/juliosueiras/terraform-lsp/releases/download/v0.0.12/terraform-lsp_0.0.12_linux_amd64.tar.gz | tar -xzf - -C ~/bin ./terraform-lsp
+if [[ ! -x "$HOME"/bin/terraform-lsp ]]; then
+  wget -qO- https://github.com/juliosueiras/terraform-lsp/releases/download/v0.0.12/terraform-lsp_0.0.12_linux_amd64.tar.gz | tar -xzf - -C "$HOME"/bin terraform-lsp
+fi
 
 # install vim-dim colorscheme
-git clone --branch 1.x git@github.com:jeffkreeftmeijer/vim-dim.git ~/.vim/pack/plugins/start/vim-dim
+rm -rf "$vimDimColorSchemePath"
+git clone --branch 1.x git@github.com:jeffkreeftmeijer/vim-dim.git "$vimDimColorSchemePath"
+
+# copy vimrc file if present
+if [ -f .vimrc ]; then
+  cp -f .vimrc "$HOME"/
+fi
 
 ## END VIM CUSTOMIZATIONS
 echo "All done!"
