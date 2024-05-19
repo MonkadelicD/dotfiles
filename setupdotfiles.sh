@@ -185,6 +185,8 @@ git clone --depth 1 https://github.com/sheerun/vim-polyglot ~/.vim/pack/plugins/
 # install coc-nvim
 git clone --branch release https://github.com/neoclide/coc.nvim.git --depth=1 ~/.vim/pack/coc/start/coc.nvim
 vim -c "helptags coc.nvim/doc/ | q"
+# copy coc-settings.json
+cp .vim/coc-settings.json ~/.vim/
 
 # install coc language servers
 vim -c "CocInstall coc-markdownlint coc-tsserver coc-json coc-html coc-css coc-pyright coc-yaml | q"
