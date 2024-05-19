@@ -166,6 +166,22 @@ vim -u NONE -c "helptags  ~/.vim/pack/vendor/start/indentLine/doc" -c "q"
 rm -rf ~/.vim/pack/plugins/start/vim-terraform
 git clone https://github.com/hashivim/vim-terraform.git ~/.vim/pack/plugins/start/vim-terraform
 
+# install vim-polyglot
+git clone --depth 1 https://github.com/sheerun/vim-polyglot ~/.vim/pack/plugins/start/vim-polyglot
+
+# install coc-nvim
+git clone --branch release https://github.com/neoclide/coc.nvim.git --depth=1 ~/.vim/pack/coc/start/coc.nvim
+vim -c "helptags coc.nvim/doc/ | q"
+
+# install coc language servers
+vim -c "CocInstall coc-markdownlint coc-tsserver coc-json coc-html coc-css coc-pyright coc-yaml | q"
+
+# install terraform-lsp
+wget -qO- https://github.com/juliosueiras/terraform-lsp/releases/download/v0.0.12/terraform-lsp_0.0.12_linux_amd64.tar.gz | tar -xzf - -C ~/bin ./terraform-lsp
+
+# install vim-dim colorscheme
+git clone --branch 1.x git@github.com:jeffkreeftmeijer/vim-dim.git ~/.vim/pack/plugins/start/vim-dim
+
 ## END VIM CUSTOMIZATIONS
 echo "All done!"
 echo "To activeate shell customizations run:"

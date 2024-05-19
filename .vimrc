@@ -1,13 +1,35 @@
 ".vimrc 
 
 "set color scheme
-colorscheme default
+set background=dark
+colorscheme dim
 
 "Use syntax highlighting
 syntax on
 
+"Load CoC config
+source ~/.coc.vimrc
+
+"Show statusline
+set laststatus=2
+
+"Status line
+set statusline=%#todo#%t    " todo highlighting, filename
+set statusline+=%*[%{strlen(&fenc)?&fenc:'none'},    " standard highlighting, file encoding
+set statusline+=%{&ff}]   " file format
+set statusline+=%h    " help file flag
+set statusline+=%m    " modified flag
+set statusline+=%#error#%r    " error highlihgting, read only flag
+set statusline+=%#todo#%y   " todo highlighting, filetype flag
+set statusline+=%*%=    " standard highlighting, left/right separator
+set statusline+=\ %{coc#status()}\    " CoC status
+set statusline+=%{synIDattr(synID(line('.'),col('.'),1),'name')}\     " syntax detected item
+set statusline+=%c,   " cursor column
+set statusline+=%l/%L   " cursor line/total lines
+set statusline+=\ %P    " percent through file
+
 "Use line numbers
-"set number
+set number
 
 "Blink cursor on error instead of sound
 set visualbell
