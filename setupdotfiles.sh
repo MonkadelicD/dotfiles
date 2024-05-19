@@ -208,7 +208,7 @@ git clone --branch release https://github.com/neoclide/coc.nvim.git --depth=1 "$
 vim -c "helptags $vimCocVimPath/doc/ | q"
 # copy coc-settings.json
 cp -f .vim/coc-settings.json "$HOME"/.vim/
-cp -f .coc-vimrc "$HOME"/
+cp -f .coc.vimrc "$HOME"/
 # install coc language servers
 vim -c "CocInstall coc-markdownlint coc-tsserver coc-json coc-html coc-css coc-pyright coc-yaml | q"
 
