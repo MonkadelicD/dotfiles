@@ -219,7 +219,7 @@ fi
 
 # install vim-dim colorscheme
 rm -rf "$vimDimColorSchemePath"
-git clone --branch 1.x git@github.com:jeffkreeftmeijer/vim-dim.git "$vimDimColorSchemePath"
+git clone --branch 1.x https://github.com/jeffkreeftmeijer/vim-dim.git "$vimDimColorSchemePath"
 
 # copy vimrc file if present
 if [ -f .vimrc ]; then
