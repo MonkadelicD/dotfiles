@@ -184,6 +184,10 @@ fi
 
 ## BEGIN VIM CUSTOMIZATIONS
 
+# install vim-dim colorscheme
+rm -rf "$vimDimColorSchemePath"
+git clone --branch 1.x https://github.com/jeffkreeftmeijer/vim-dim.git "$vimDimColorSchemePath"
+
 # if .vim directory is missing create it and the vendor and plugins directory trees
 if [ ! -d "$HOME"/.vim ]; then
   mkdir -p "$HOME"/.vim/pack/{plugins,vendor}/start
@@ -216,10 +220,6 @@ vim -c "CocInstall coc-markdownlint coc-tsserver coc-json coc-html coc-css coc-p
 if [[ ! -x "$HOME"/bin/terraform-lsp ]]; then
   wget -qO- https://github.com/juliosueiras/terraform-lsp/releases/download/v0.0.12/terraform-lsp_0.0.12_linux_amd64.tar.gz | tar -xzf - -C "$HOME"/bin terraform-lsp
 fi
-
-# install vim-dim colorscheme
-rm -rf "$vimDimColorSchemePath"
-git clone --branch 1.x https://github.com/jeffkreeftmeijer/vim-dim.git "$vimDimColorSchemePath"
 
 # copy vimrc file if present
 if [ -f .vimrc ]; then
