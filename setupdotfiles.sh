@@ -57,6 +57,11 @@ sudo apt update && sudo apt install -y "$1"
 
 ## BEGIN PREREQUISITES
 
+# ensure $HOME/bin exists
+if [[ ! -d "$HOME"/bin ]]; then
+  mkdir -p "$HOME"/bin
+fi
+
 # Ensure git is installed
 if [[ ! -x /usr/bin/git ]]; then
   # Install with apt or dnf
