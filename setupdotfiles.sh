@@ -101,6 +101,16 @@ if [[ ! -x /usr/bin/tmux ]]; then
   fi
 fi
 
+# Ensure tree is installed
+if [[ ! -x /usr/bin/git ]]; then
+  # Install with apt or dnf
+  if [ "$pkg_mngr" == apt ]; then
+    run_apt tree 
+  elif [ "$pkg_mngr" == dnf ]; then
+    run_dnf tree
+  fi
+fi
+
 ## END PREREQUISITES
 
 ## START BASH CUSTOMIZATIONS
