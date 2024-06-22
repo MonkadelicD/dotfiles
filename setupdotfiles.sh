@@ -170,6 +170,7 @@ fi
 ## START GNOME-TERMINAL CUSTOMIZATIONS
 
 # set gnome-terminal palette to modified solarized colors
+##TODO - Not sure this actually works yet...
 if [ -z "$PROFILE_ID" ]; then
   gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:$PROFILE_ID/ palette "['#171421', '#c01c28', '#26a269', '#a2734c', '#12488b', '#a347ba', '#2aa1b3', '#d0cfcc', '#5e5c64', '#f66151', '#33da7a', '#e9ad0c', '#2a7bde', '#c061cb', '#33c7de', '#ffffff']"
 fi
