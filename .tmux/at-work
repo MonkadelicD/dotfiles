@@ -9,15 +9,13 @@ split-window -v -l 70%
 send-keys 'uu' C-m
 # select the main pane to the left.
 select-pane -t 0
-# start synergy as a background process
-send-keys 'synergy &' C-m
 # create a new pane on the bottom using 80% of the height.
 split-window -v -l 80%
 # create new pane along bottom of the large pane
 split-window -v -l 17%
 # create new pane using half of bottom pane for running chromium command
 split-window -h -l 50%
-send-keys 'sleep 120; chromium --window-size="1920,1080" --window-position="300,500" &' C-m
+#send-keys 'sleep 120; chromium --window-size="1920,1080" --window-position="300,500" &' C-m
 # select the main pane in the top left.
 select-pane -t 0
 # create a new pane using 35% of the top left pane.
