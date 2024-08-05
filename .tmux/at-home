@@ -2,7 +2,7 @@
 # Default:
 
 # create a new pane using 35% of the full width and start htop.
-split-window -h -l 30% htop
+split-window -h -l 35% htop
 # create a new pane under the htop process using 70% of the height.
 split-window -v -l 70%
 # run update using 'uu' alias
