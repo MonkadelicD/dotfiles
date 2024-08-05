@@ -5,18 +5,21 @@ if [ -e /etc/os-release ]; then
   . /etc/os-release;
 fi
 if [ "$ID" = "ubuntu" ] || [ "$ID" = "debian" ] || [ "$ID" = "linuxmint" ]; then
-  vimCmd="vim"
+  alias vimCmd="vim"
 elif [ "$ID" = "fedora" ] || [ "$ID" = "rhel" ] || [ "$ID" = "rocky" ]; then
-  vimCmd="vimx"
+  alias vimCmd="vimx"
 else
   echo "Untested OS. Please verify and improve this script."
   exit 1
 fi
 
+echo "ID is $ID"
+echo "vimCMD is $(alias vimCmd)"
+
 serv=${S:-xtvim}
 
-if $vimCmd --serverlist | grep -qxiF "$serv"; then
-  $vimCmd --servername "$serv" --remote-tab "$@"
+if vimCmd --serverlist | grep -qxiF "$serv"; then
+  vimCmd --servername "$serv" --remote-tab "$@"
 else
   xterm -name "$serv" -e vim -p --servername "$serv" "$@" &
 fi
