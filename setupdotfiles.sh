@@ -21,7 +21,8 @@ dtfls_mng_tail="### END DOTFILES MANAGED BLOCK"
 if [ -e /etc/os-release ]; then
   source /etc/os-release;
 fi
-if [[ "$ID" == "ubuntu" ]] || [[ "$ID" == "debian" ]] || [[ "$ID" == "linuxmint" ]]; then pkg_mngr="apt"
+if [[ "$ID" == "ubuntu" ]] || [[ "$ID" == "debian" ]] || [[ "$ID" == "linuxmint" ]]; then
+  pkg_mngr="apt"
 elif [[ "$ID" == "fedora" ]] || [[ "$ID" == "rhel" ]] || [[ "$ID" == "rocky" ]]; then
   pkg_mngr="dnf"
 else
@@ -86,16 +87,23 @@ if [[ ! $(command -v node) ]]; then
   nvm install --lts
 fi
 
-# Ensure vim and vim-gtk3 is installed
+# Ensure vim is installed
 if [[ ! -x /usr/bin/vim ]]; then
   # install wtih apt or dnf
   if [ "$pkg_mngr" == apt ]; then
     run_apt vim
-    run_apt vim-gtk3
   elif [ "$pkg_mngr" == dnf ]; then
     run_dnf vim
-    run_dnf vim-X11
   fi
+fi
+
+# Ensure vim-gtk3 is installed
+if [ "$pkg_mngr" == apt ] && [[ ! -x /usr/bin/vim.gtk3 ]]; then
+  # install wtih apt or dnf
+  run_apt vim-gtk3
+# look for vimx in rpm distros
+elif [ "$pkg_mngr" == dnf ] && [[ ! -x /usr/bin/vimx ]]; then
+  run_dnf vim-X11
 fi
 
 # Ensure tmux is installed

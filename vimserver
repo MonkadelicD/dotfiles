@@ -1,9 +1,22 @@
 #!/bin/sh
 
+# Get OS info to determine package manager
+if [ -e /etc/os-release ]; then
+  source /etc/os-release;
+fi
+if [[ "$ID" == "ubuntu" ]] || [[ "$ID" == "debian" ]] || [[ "$ID" == "linuxmint" ]]; then
+  vimCmd="apt"
+elif [[ "$ID" == "fedora" ]] || [[ "$ID" == "rhel" ]] || [[ "$ID" == "rocky" ]]; then
+  vimCmd="dnf"
+else
+  echo "Untested OS. Please verify and improve this script."
+  exit 1
+fi
+
 serv=${S:-xtvim}
 
-if vim --serverlist | grep -qxiF "$serv"; then
-  vim --servername "$serv" --remote-tab "$@"
+if $vimCmd --serverlist | grep -qxiF "$serv"; then
+  $vimCmd --servername "$serv" --remote-tab "$@"
 else
   xterm -name "$serv" -e vim -p --servername "$serv" "$@" &
 fi
