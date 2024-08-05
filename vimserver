@@ -1,0 +1,9 @@
+#!/bin/sh
+
+serv=${S:-xtvim}
+
+if vim --serverlist | grep -qxiF "$serv"; then
+  vim --servername "$serv" --remote-tab "$@"
+else
+  xterm -name "$serv" -e vim -p --servername "$serv" "$@" &
+fi

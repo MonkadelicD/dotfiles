@@ -86,13 +86,15 @@ if [[ ! $(command -v node) ]]; then
   nvm install --lts
 fi
 
-# Ensure vim is installed
+# Ensure vim and vim-gtk3 is installed
 if [[ ! -x /usr/bin/vim ]]; then
   # install wtih apt or dnf
   if [ "$pkg_mngr" == apt ]; then
-    run_apt vim 
+    run_apt vim
+    run_apt vim-gtk3
   elif [ "$pkg_mngr" == dnf ]; then
     run_dnf vim
+    run_dnf vim-X11
   fi
 fi
 
@@ -107,12 +109,32 @@ if [[ ! -x /usr/bin/tmux ]]; then
 fi
 
 # Ensure tree is installed
-if [[ ! -x /usr/bin/git ]]; then
+if [[ ! -x /usr/bin/tree ]]; then
   # Install with apt or dnf
   if [ "$pkg_mngr" == apt ]; then
     run_apt tree 
   elif [ "$pkg_mngr" == dnf ]; then
     run_dnf tree
+  fi
+fi
+
+# Ensure ranger is installed
+if [[ ! -x /usr/bin/ranger ]]; then
+  # Install with apt or dnf
+  if [ "$pkg_mngr" == apt ]; then
+    run_apt ranger
+  elif [ "$pkg_mngr" == dnf ]; then
+    run_dnf ranger
+  fi
+fi
+
+# Ensure htop is installed
+if [[ ! -x /usr/bin/htop ]]; then
+  # Install with apt or dnf
+  if [ "$pkg_mngr" == apt ]; then
+    run_apt htop
+  elif [ "$pkg_mngr" == dnf ]; then
+    run_dnf htop
   fi
 fi
 
@@ -199,6 +221,12 @@ fi
 
 ## BEGIN VIM CUSTOMIZATIONS
 
+# copy vimserver script for ranger
+if [ ! -d "$HOME"/.local/bin ]; then
+  mkdir -p "$HOME"/.local/bin
+fi
+cp vimserver "$HOME"/.local/bin
+
 # install vim-dim colorscheme
 rm -rf "$vimDimColorSchemePath"
 git clone --branch 1.x https://github.com/jeffkreeftmeijer/vim-dim.git "$vimDimColorSchemePath"
@@ -243,5 +271,8 @@ fi
 
 ## END VIM CUSTOMIZATIONS
 echo "All done!"
+echo
+echo "To use vimserver script with ranger, edit $HOME/.config/ranger/rifle.conf"
+echo
 echo "To activeate shell customizations run:"
 echo "        source ~/.bashrc.sh"
