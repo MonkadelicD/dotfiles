@@ -5,9 +5,9 @@ if [ -e /etc/os-release ]; then
   source /etc/os-release;
 fi
 if [[ "$ID" == "ubuntu" ]] || [[ "$ID" == "debian" ]] || [[ "$ID" == "linuxmint" ]]; then
-  vimCmd="apt"
+  vimCmd="vim"
 elif [[ "$ID" == "fedora" ]] || [[ "$ID" == "rhel" ]] || [[ "$ID" == "rocky" ]]; then
-  vimCmd="dnf"
+  vimCmd="vimx"
 else
   echo "Untested OS. Please verify and improve this script."
   exit 1
