@@ -21,7 +21,8 @@ dtfls_mng_tail="### END DOTFILES MANAGED BLOCK"
 if [ -e /etc/os-release ]; then
   source /etc/os-release;
 fi
-if [[ "$ID" == "ubuntu" ]] || [[ "$ID" == "debian" ]] || [[ "$ID" == "linuxmint" ]]; then pkg_mngr="apt"
+if [[ "$ID" == "ubuntu" ]] || [[ "$ID" == "debian" ]] || [[ "$ID" == "linuxmint" ]]; then
+  pkg_mngr="apt"
 elif [[ "$ID" == "fedora" ]] || [[ "$ID" == "rhel" ]] || [[ "$ID" == "rocky" ]]; then
   pkg_mngr="dnf"
 else
@@ -90,10 +91,19 @@ fi
 if [[ ! -x /usr/bin/vim ]]; then
   # install wtih apt or dnf
   if [ "$pkg_mngr" == apt ]; then
-    run_apt vim 
+    run_apt vim
   elif [ "$pkg_mngr" == dnf ]; then
     run_dnf vim
   fi
+fi
+
+# Ensure vim-gtk3 is installed
+if [ "$pkg_mngr" == apt ] && [[ ! -x /usr/bin/vim.gtk3 ]]; then
+  # install wtih apt or dnf
+  run_apt vim-gtk3
+# look for vimx in rpm distros
+elif [ "$pkg_mngr" == dnf ] && [[ ! -x /usr/bin/vimx ]]; then
+  run_dnf vim-X11
 fi
 
 # Ensure tmux is installed
@@ -107,12 +117,32 @@ if [[ ! -x /usr/bin/tmux ]]; then
 fi
 
 # Ensure tree is installed
-if [[ ! -x /usr/bin/git ]]; then
+if [[ ! -x /usr/bin/tree ]]; then
   # Install with apt or dnf
   if [ "$pkg_mngr" == apt ]; then
     run_apt tree 
   elif [ "$pkg_mngr" == dnf ]; then
     run_dnf tree
+  fi
+fi
+
+# Ensure ranger is installed
+if [[ ! -x /usr/bin/ranger ]]; then
+  # Install with apt or dnf
+  if [ "$pkg_mngr" == apt ]; then
+    run_apt ranger
+  elif [ "$pkg_mngr" == dnf ]; then
+    run_dnf ranger
+  fi
+fi
+
+# Ensure htop is installed
+if [[ ! -x /usr/bin/htop ]]; then
+  # Install with apt or dnf
+  if [ "$pkg_mngr" == apt ]; then
+    run_apt htop
+  elif [ "$pkg_mngr" == dnf ]; then
+    run_dnf htop
   fi
 fi
 
@@ -170,7 +200,6 @@ fi
 ## START GNOME-TERMINAL CUSTOMIZATIONS
 
 # set gnome-terminal palette to modified solarized colors
-##TODO - Not sure this actually works yet...
 if [ -z "$PROFILE_ID" ]; then
   gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:$PROFILE_ID/ palette "['#171421', '#c01c28', '#26a269', '#a2734c', '#12488b', '#a347ba', '#2aa1b3', '#d0cfcc', '#5e5c64', '#f66151', '#33da7a', '#e9ad0c', '#2a7bde', '#c061cb', '#33c7de', '#ffffff']"
 fi
@@ -199,6 +228,12 @@ fi
 ## END TMUX CUSTOMIZATIONS
 
 ## BEGIN VIM CUSTOMIZATIONS
+
+# copy vimserver script for ranger
+if [ ! -d "$HOME"/.local/bin ]; then
+  mkdir -p "$HOME"/.local/bin
+fi
+cp vimserver "$HOME"/.local/bin
 
 # install vim-dim colorscheme
 rm -rf "$vimDimColorSchemePath"
@@ -244,5 +279,8 @@ fi
 
 ## END VIM CUSTOMIZATIONS
 echo "All done!"
+echo
+echo "To use vimserver script with ranger, edit $HOME/.config/ranger/rifle.conf"
+echo
 echo "To activeate shell customizations run:"
 echo "        source ~/.bashrc.sh"
