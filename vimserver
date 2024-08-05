@@ -2,11 +2,11 @@
 
 # Get OS info to determine package manager
 if [ -e /etc/os-release ]; then
-  source /etc/os-release;
+  . /etc/os-release;
 fi
-if [[ "$ID" == "ubuntu" ]] || [[ "$ID" == "debian" ]] || [[ "$ID" == "linuxmint" ]]; then
+if [ "$ID" = "ubuntu" ] || [ "$ID" = "debian" ] || [ "$ID" = "linuxmint" ]; then
   vimCmd="vim"
-elif [[ "$ID" == "fedora" ]] || [[ "$ID" == "rhel" ]] || [[ "$ID" == "rocky" ]]; then
+elif [ "$ID" = "fedora" ] || [ "$ID" = "rhel" ] || [ "$ID" = "rocky" ]; then
   vimCmd="vimx"
 else
   echo "Untested OS. Please verify and improve this script."
