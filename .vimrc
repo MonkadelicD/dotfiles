@@ -1,5 +1,8 @@
 ".vimrc 
 
+"ignore coc warnings
+let g:coc_disable_startup_warning = 1
+
 "set color scheme
 set background=dark
 colorscheme dim
