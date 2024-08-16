@@ -1,5 +1,5 @@
 #!/bin/bash
-## setupdotfiles.sh
+## setup_bash_only.sh
 ## Automate configuration of dotfiles, ie:
 ## create .bashrc.d if not present and place bash customizations
 ## there. Also add stanza to .bashrc to look in .bashrc.d if not present
@@ -8,10 +8,6 @@
 
 # variable containing line to source customized bash script
 dtfls_rc_add="[ -r ~/.bashrc.sh ] && source ~/.bashrc.sh"
-
-if [[ $XDG_CURRENT_DESKTOP =~ .*gnome.* ]]; then
-  PROFILE_ID=$(gsettings get org.gnome.Terminal.ProfilesList default)
-fi
 
 # create variables to hold markers for config blocks managed by this script
 dtfls_mng_head="### BEGIN DOTFILES MANAGED BLOCK"
@@ -42,9 +38,6 @@ script_dir=$(dirname "$0")
 
 # VIM paths
 vimIndentLinePath="$HOME"/.vim/pack/vendor/start/indentLine
-vimTerraformPath="$HOME"/.vim/pack/plugins/start/vim-terraform
-vimPolyglotPath="$HOME"/.vim/pack/plugins/start/vim-polyglot
-vimCocVimPath="$HOME"/.vim/pack/coc/start/coc.nvim
 vimDimColorSchemePath="$HOME"/.vim/pack/plugins/start/vim-dim
 
 ## END VARIABLES
@@ -87,20 +80,6 @@ if [[ ! -x /usr/bin/git ]]; then
   fi
 fi
 
-# Ensure node is present
-if [[ ! $(command -v node) ]]; then
-  # if not, verify nvm is present
-  if [[ ! $(command -v nvm ) ]]; then
-    export NVM_DIR="$HOME/.nvm" && rm -rf "$NVM_DIR" && (
-    git clone https://github.com/nvm-sh/nvm.git "$NVM_DIR"
-    cd "$NVM_DIR"
-    git checkout `git describe --abbrev=0 --tags --match "v[0-9]*" $(git rev-list --tags --max-count=1)`
-    ) && \. "$NVM_DIR/nvm.sh"
-  fi
-  # install latest LTS node
-  nvm install --lts
-fi
-
 # Ensure vim is installed
 if [[ ! -x /usr/bin/vim ]]; then
   # install wtih apt or dnf
@@ -110,29 +89,6 @@ if [[ ! -x /usr/bin/vim ]]; then
     run_dnf vim
   elif [ "$pkg_mngr" == yum ]; then
     run_yum vim
-  fi
-fi
-
-# Ensure vim-gtk3 is installed
-if [ "$pkg_mngr" == apt ] && [[ ! -x /usr/bin/vim.gtk3 ]]; then
-  # install wtih apt or dnf
-  run_apt vim-gtk3
-# look for vimx in rpm distros
-elif [ "$pkg_mngr" == dnf ] && [[ ! -x /usr/bin/vimx ]]; then
-  run_dnf vim-X11
-elif [ "$pkg_mngr" == yum ] && [[ ! -x /usr/bin/vimx ]]; then
-  run_yum vim-X11
-fi
-
-# Ensure tmux is installed
-if [[ ! -x /usr/bin/tmux ]]; then
-  # install wtih apt or dnf
-  if [ "$pkg_mngr" == apt ]; then
-    run_apt tmux 
-  elif [ "$pkg_mngr" == dnf ]; then
-    run_dnf tmux
-  elif [ "$pkg_mngr" == yum ]; then
-    run_yum tmux
   fi
 fi
 
@@ -148,27 +104,15 @@ if [[ ! -x /usr/bin/tree ]]; then
   fi
 fi
 
-# Ensure ranger is installed
-if [[ ! -x /usr/bin/ranger ]]; then
-  # Install with apt or dnf
+# Ensure tmux is installed
+if [[ ! -x /usr/bin/tmux ]]; then
+  # install wtih apt or dnf
   if [ "$pkg_mngr" == apt ]; then
-    run_apt ranger
+    run_apt tmux 
   elif [ "$pkg_mngr" == dnf ]; then
-    run_dnf ranger
+    run_dnf tmux
   elif [ "$pkg_mngr" == yum ]; then
-    run_yum ranger
-  fi
-fi
-
-# Ensure htop is installed
-if [[ ! -x /usr/bin/htop ]]; then
-  # Install with apt or dnf
-  if [ "$pkg_mngr" == apt ]; then
-    run_apt htop
-  elif [ "$pkg_mngr" == dnf ]; then
-    run_dnf htop
-  elif [ "$pkg_mngr" == yum ]; then
-    run_yum htop
+    run_yum tmux
   fi
 fi
 
@@ -224,15 +168,6 @@ fi
 
 ## END BASH CUSTOMIZATIONS
 
-## START GNOME-TERMINAL CUSTOMIZATIONS
-
-# set gnome-terminal palette to modified solarized colors
-if [ -z "$PROFILE_ID" ]; then
-  gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:$PROFILE_ID/ palette "['#171421', '#c01c28', '#26a269', '#a2734c', '#12488b', '#a347ba', '#2aa1b3', '#d0cfcc', '#5e5c64', '#f66151', '#33da7a', '#e9ad0c', '#2a7bde', '#c061cb', '#33c7de', '#ffffff']"
-fi
-
-## END GNOME-TERMINAL CUSTOMIZATIONS
-
 ## START TMUX CUSTOMIZATIONS
 
 # Create an array of tmux config files
@@ -256,12 +191,6 @@ fi
 
 ## BEGIN VIM CUSTOMIZATIONS
 
-# copy vimserver script for ranger
-if [ ! -d "$HOME"/.local/bin ]; then
-  mkdir -p "$HOME"/.local/bin
-fi
-cp vimserver "$HOME"/.local/bin
-
 # install vim-dim colorscheme
 rm -rf "$vimDimColorSchemePath"
 git clone --branch 1.x https://github.com/jeffkreeftmeijer/vim-dim.git "$vimDimColorSchemePath"
@@ -276,35 +205,13 @@ rm -rf "$vimIndentLinePath"
 git clone https://github.com/Yggdroot/indentLine.git "$vimIndentLinePath"
 vim -u NONE -c "helptags  $vimIndentLinePath/doc" -c "q"
 
-# install vim-terraform plugin
-rm -rf "$vimTerraformPath"
-git clone https://github.com/hashivim/vim-terraform.git "$vimTerraformPath"
-
-# install vim-polyglot
-rm -rf "$vimPolyglotPath"
-git clone --depth 1 https://github.com/sheerun/vim-polyglot "$vimPolyglotPath"
-
-# install coc-nvim
-rm -rf "$vimCocVimPath"
-git clone --branch release https://github.com/neoclide/coc.nvim.git --depth=1 "$vimCocVimPath"
-vim -c "helptags $vimCocVimPath/doc/ | q"
-# copy coc-settings.json
-cp -f .vim/coc-settings.json "$HOME"/.vim/
-cp -f .coc.vimrc "$HOME"/
-# install coc language servers
-vim -c "CocInstall coc-markdownlint coc-tsserver coc-json coc-html coc-css coc-pyright coc-yaml | q"
-
-# install terraform-lsp
-if [[ ! -x "$HOME"/bin/terraform-lsp ]]; then
-  wget -qO- https://github.com/juliosueiras/terraform-lsp/releases/download/v0.0.12/terraform-lsp_0.0.12_linux_amd64.tar.gz | tar -xzf - -C "$HOME"/bin terraform-lsp
-fi
-
 # copy vimrc file if present
 if [ -f .vimrc ]; then
   cp -f .vimrc "$HOME"/
 fi
 
 ## END VIM CUSTOMIZATIONS
+
 echo "All done!"
 echo
 echo "To use vimserver script with ranger, edit $HOME/.config/ranger/rifle.conf"
