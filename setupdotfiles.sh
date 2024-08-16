@@ -155,6 +155,8 @@ if [ "$script_dir" != "$PWD" ]; then
   cd "$script_dir" || { echo "Failed changing directory to $script_dir"; exit 1; }
 fi
 
+script_dir="$PWD"
+
 # Create an array of custom bash config files
 bashrc_configs=("$(ls -1 bashrc.*)")
 
@@ -187,12 +189,12 @@ fi
 if [ -h "$HOME"/.bashrc.sh ]; then
   unlink "$HOME"/.bashrc.sh
 fi
-ln -sf "$HOME"/dotfiles/bashrc.sh "$HOME"/.bashrc.sh
+ln -sf "$scritp_dir"/bashrc.sh "$HOME"/.bashrc.sh
 # remove an existing soft link
 if [ -x "$HOME"/.bashrc.d ]; then
   cp -f ./bashrc.d/* "$HOME"/.bashrc.d/
 else
-  ln -sf "$HOME"/dotfiles/bashrc.d "$HOME"/.bashrc.d
+  ln -sf "$scritp_dir"/bashrc.d "$HOME"/.bashrc.d
 fi
 
 ## END BASH CUSTOMIZATIONS
