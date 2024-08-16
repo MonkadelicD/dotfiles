@@ -159,12 +159,12 @@ fi
 if [ -h "$HOME"/.bashrc.sh ]; then
   unlink "$HOME"/.bashrc.sh
 fi
-ln -sf "$scritp_dir"/bashrc.sh "$HOME"/.bashrc.sh
+ln -sf "$script_dir"/bashrc.sh "$HOME"/.bashrc.sh
 # remove an existing soft link
 if [ -x "$HOME"/.bashrc.d ]; then
   cp -f ./bashrc.d/* "$HOME"/.bashrc.d/
 else
-  ln -sf "$scritp_dir"/bashrc.d "$HOME"/.bashrc.d
+  ln -sf "$script_dir"/bashrc.d "$HOME"/.bashrc.d
 fi
 
 ## END BASH CUSTOMIZATIONS
@@ -192,14 +192,14 @@ fi
 
 ## BEGIN VIM CUSTOMIZATIONS
 
-# install vim-dim colorscheme
-rm -rf "$vimDimColorSchemePath"
-git clone --branch 1.x https://github.com/jeffkreeftmeijer/vim-dim.git "$vimDimColorSchemePath"
-
 # if .vim directory is missing create it and the vendor and plugins directory trees
 if [ ! -d "$HOME"/.vim ]; then
   mkdir -p "$HOME"/.vim/pack/{plugins,vendor}/start
 fi
+
+# install vim-dim colorscheme
+rm -rf "$vimDimColorSchemePath"
+git clone --branch 1.x https://github.com/jeffkreeftmeijer/vim-dim.git "$vimDimColorSchemePath"
 
 # install indentLine vim plugin
 rm -rf "$vimIndentLinePath"
