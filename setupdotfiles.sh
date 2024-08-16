@@ -23,6 +23,7 @@ for release_file in $(ls /etc/*release); do
     echo "Getting release info from... $release_file"
     if [ "${release_file#*"centos"}" != "$release_file" ]; then
       pkg_mngr="yum"
+      ID=centos
     else
       source "$release_file"
     fi
