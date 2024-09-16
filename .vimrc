@@ -1,5 +1,8 @@
 ".vimrc 
 
+"disable modelines
+set nomodeline
+
 "ignore coc warnings
 let g:coc_disable_startup_warning = 1
 
