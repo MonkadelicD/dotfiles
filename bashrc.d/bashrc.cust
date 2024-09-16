@@ -2,8 +2,8 @@
 
 # set my bash history customizations
 # keep more history
-HISTSIZE=3000
-HISTFILESIZE=9000
+HISTSIZE=10000
+HISTFILESIZE=500000
 
 # enable color prompt
 case "$TERM" in
