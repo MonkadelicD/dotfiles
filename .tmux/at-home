@@ -10,7 +10,7 @@ send-keys 'uu' C-m
 # select the main pane to the left.
 select-pane -t 0
 # start synergy as a background process
-send-keys 'synergy &' C-m
+#send-keys 'synergy &' C-m
 # create a new pane on the bottom using 80% of the height.
 split-window -v -l 80%
 # create new pane along bottom of the large pane
