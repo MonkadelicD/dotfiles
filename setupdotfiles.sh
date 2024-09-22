@@ -19,13 +19,12 @@ dtfls_mng_tail="### END DOTFILES MANAGED BLOCK"
 
 # Get OS info to determine package manager
 for release_file in $(ls /etc/*release); do
-  if [[ ! -h "$release_file" ]] && [[ -f "$release_file" ]]; then
-    echo "Getting release info from... $release_file"
-    if [ "${release_file#*"centos"}" != "$release_file" ]; then
-      pkg_mngr="yum"
-      ID=centos
-    fi
-  elif [[ -f "$release_file" ]]; then
+  echo "Getting release info from... $release_file"
+  if [ "${release_file#*"centos"}" != "$release_file" ]; then
+    pkg_mngr="yum"
+    ID=centos
+  fi
+  if grep "ID=" $release_file ; then
     source "$release_file"
   fi
 done
