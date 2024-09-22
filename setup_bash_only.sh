@@ -15,24 +15,24 @@ dtfls_mng_tail="### END DOTFILES MANAGED BLOCK"
 
 # Get OS info to determine package manager
 for release_file in $(ls /etc/*release); do
-  if [[ ! -h "$release_file" ]] && [[ -f "$release_file" ]]; then
-    echo "Getting release info from... $release_file"
-    if [ "${release_file#*"centos"}" != "$release_file" ]; then
-      pkg_mngr="yum"
-      ID=centos
-    else
-      source "$release_file"
-    fi
-    if [[ -z "$ID" ]]; then
-      echo "Untested OS. Please verify and improve this script."
-      exit 1
-    elif [[ "$ID" == "ubuntu" ]] || [[ "$ID" == "debian" ]] || [[ "$ID" == "linuxmint" ]]; then
-      pkg_mngr="apt"
-    elif [[ "$ID" == "fedora" ]] || [[ "$ID" == "rhel" ]] || [[ "$ID" == "rocky" ]]; then
-      pkg_mngr="dnf"
-    fi
+  echo "Getting release info from... $release_file"
+  if [ "${release_file#*"centos"}" != "$release_file" ]; then
+    pkg_mngr="yum"
+    ID=centos
+  fi
+  if grep "ID=" $release_file ; then
+    source "$release_file"
   fi
 done
+
+if [[ -z "$ID" ]]; then
+  echo "Untested OS. Please verify and improve this script."
+  exit 1
+elif [[ "$ID" == "ubuntu" ]] || [[ "$ID" == "debian" ]] || [[ "$ID" == "linuxmint" ]]; then
+  pkg_mngr="apt"
+elif [[ "$ID" == "fedora" ]] || [[ "$ID" == "rhel" ]] || [[ "$ID" == "rocky" ]]; then
+  pkg_mngr="dnf"
+fi
 
 # What is the path to this script?
 script_dir=$(dirname "$0")
