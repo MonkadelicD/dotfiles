@@ -13,8 +13,8 @@ fi
 
 # customized default ls aliases
 alias ll='ls -hAl'
-alias la='ls -Ah'
-alias l='ls -CFAh'
+alias la='ls -CFAh'
+alias l='ls -CFh'
 
 # call custom tmux layouts
 alias tmux-work='tmux new-session -s "Ds-Work" -n SysAdmin'
