@@ -21,9 +21,6 @@ alias tmux-work='tmux new-session -s "Ds-Work" -n SysAdmin'
 alias tmux-home='tmux new-session -s "Ds-Home" -n SysAdmin'
 alias tmux-start='tmux new-session -s "Ds-Sess" -n SysAdmin'
 
-# use python3
-alias python='python3'
-
 # colorized tree
 alias tree='tree -C'
 
