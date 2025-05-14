@@ -55,7 +55,5 @@ send-keys -t 1 'ranger' C-m
 select-window -t 1
 # select the pane in the top-left.
 select-pane -t 0
-# enter command to start work backup
-send-keys 'backupwork'
 # select main pane (#2)
 select-pane -t 2
