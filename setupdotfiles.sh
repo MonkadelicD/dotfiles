@@ -46,6 +46,7 @@ vimIndentLinePath="$HOME"/.vim/pack/vendor/start/indentLine
 vimTerraformPath="$HOME"/.vim/pack/plugins/start/vim-terraform
 vimCocVimPath="$HOME"/.vim/pack/coc/start/coc.nvim
 vimDimColorSchemePath="$HOME"/.vim/pack/plugins/start/vim-dim
+vimWindsurfPath="$HOME"/.vim/pack/Exafunction/start.windsurf.vim
 
 ## END VARIABLES
 
@@ -276,16 +277,16 @@ fi
 
 # install vim-dim colorscheme
 rm -rf "$vimDimColorSchemePath"
-git clone --branch 1.x https://github.com/jeffkreeftmeijer/vim-dim.git "$vimDimColorSchemePath"
+git clone --branch 1.x https://github.com/jeffkreeftmeijer/vim-dim.git --depth=1 "$vimDimColorSchemePath"
 
 # install indentLine vim plugin
 rm -rf "$vimIndentLinePath"
-git clone https://github.com/Yggdroot/indentLine.git "$vimIndentLinePath"
+git clone --branch master https://github.com/Yggdroot/indentLine.git --depth=1 "$vimIndentLinePath"
 vim -u NONE -c "helptags  $vimIndentLinePath/doc" -c "q"
 
 # install vim-terraform plugin
 rm -rf "$vimTerraformPath"
-git clone https://github.com/hashivim/vim-terraform.git "$vimTerraformPath"
+git clone --branch master https://github.com/hashivim/vim-terraform.git --depth=1"$vimTerraformPath"
 
 # install coc-nvim
 rm -rf "$vimCocVimPath"
@@ -302,6 +303,10 @@ if [[ ! -x "$HOME"/bin/terraform-lsp ]]; then
   wget -qO- https://github.com/juliosueiras/terraform-lsp/releases/download/v0.0.12/terraform-lsp_0.0.12_linux_amd64.tar.gz | tar -xzf - -C "$HOME"/bin terraform-lsp
 fi
 
+# install windsurf.vim plugin
+rm -rf "$vimWindsurfPath"
+git clone --branch main --depth=1 https://github.com/Exafunction/windsurf.vim "$vimWindsurfPath"
+
 # copy vimrc file if present
 if [ -f .vimrc ]; then
   cp -f .vimrc "$HOME"/
@@ -309,8 +314,6 @@ fi
 
 ## END VIM CUSTOMIZATIONS
 echo "All done!"
-echo
-echo "To use vimserver script with ranger, edit $HOME/.config/ranger/rifle.conf"
 echo
 echo "To activeate shell customizations run:"
 echo "        source ~/.bashrc.sh"
