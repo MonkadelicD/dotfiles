@@ -9,8 +9,6 @@ split-window -v -l 70%
 send-keys 'uu' C-m
 # select the main pane to the left.
 select-pane -t 0
-# start synergy as a background process
-#send-keys 'synergy &' C-m
 # create a new pane on the bottom using 80% of the height.
 split-window -v -l 85%
 # create new pane along bottom of the large pane
@@ -20,6 +18,8 @@ select-pane -t 0
 # create a new pane using 35% of the top left pane.
 split-window -h -l 35%
 # run the tmux clock app.
-select-pane -t 1
-clock-mode
+clock-mode -t 1
+# select the main pane in the top left.
+select-pane -t 0
+# select main pane
 select-pane -t 2

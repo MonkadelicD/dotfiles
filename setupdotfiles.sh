@@ -268,6 +268,7 @@ ranger --copy-config=all 2>&1 >/dev/null
 
 # setup ranger to use vimserver for opening text files
 sed -i 's/\${VISUAL:-\$EDITOR} --/vimserver/g' ~/.config/ranger/rifle.conf
+sed -i 's/\(editor, ext [^ ]*\)\(.*$\)/\1|yml|yaml\2/' ~/.config/ranger/rifle.conf
 sed -i 's/\(^set column_ratios \).*$/\11,5,1/' ~/.config/ranger/rc.conf
 
 # if .vim directory is missing create it and the vendor and plugins directory trees
