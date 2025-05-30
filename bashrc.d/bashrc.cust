@@ -43,3 +43,9 @@ export VISUAL='vim'
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# load kubeconfig and set KUBECONFIG env var if hostname contains "work"
+if [[ "$HOSTNAME" =~ "work" ]]; then
+    source <(kubectl completion bash)
+    export KUBECONFIG="$HOME"/Projects/k8s/kdc/kdc.yaml
+fi
