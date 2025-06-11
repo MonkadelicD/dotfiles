@@ -26,3 +26,8 @@ alias tree='tree -C'
 
 # git aliases
 alias gitup='git remote update --prune; git pull'
+
+#kubernetes aliases
+alias k='kubectl'
+alias kx='kubectx'
+alias kn='kubens'
