@@ -49,3 +49,8 @@ if [[ "$HOSTNAME" =~ "work" ]]; then
     source <(kubectl completion bash)
     export KUBECONFIG="$HOME"/Projects/k8s/kdc/kdc.yaml
 fi
+
+# if helm is present add completion scripts
+if [ -f /usr/local/bin/helm ]; then
+    source <(helm completion bash)
+fi
