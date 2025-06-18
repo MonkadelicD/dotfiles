@@ -3,18 +3,12 @@
 "disable modelines
 set nomodeline
 
-"ignore coc warnings
-let g:coc_disable_startup_warning = 1
-
 "set color scheme
 set background=dark
 colorscheme dim
 
 "Use syntax highlighting
 syntax on
-
-"Load CoC config
-source ~/.coc.vimrc
 
 "Show statusline
 set laststatus=2
@@ -28,7 +22,6 @@ set statusline+=%m    " modified flag
 set statusline+=%#error#%r    " error highlihgting, read only flag
 set statusline+=%#todo#%y   " todo highlighting, filetype flag
 set statusline+=%*%=    " standard highlighting, left/right separator
-set statusline+=\ %{coc#status()}\    " CoC status
 set statusline+=%{synIDattr(synID(line('.'),col('.'),1),'name')}\     " syntax detected item
 set statusline+=%c,   " cursor column
 set statusline+=%l/%L   " cursor line/total lines
