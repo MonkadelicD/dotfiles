@@ -44,7 +44,6 @@ script_dir=$(dirname "$0")
 # VIM paths
 vimIndentLinePath="$HOME"/.vim/pack/vendor/start/indentLine
 vimTerraformPath="$HOME"/.vim/pack/plugins/start/vim-terraform
-vimCocVimPath="$HOME"/.vim/pack/coc/start/coc.nvim
 vimDimColorSchemePath="$HOME"/.vim/pack/plugins/start/vim-dim
 vimWindsurfPath="$HOME"/.vim/pack/Exafunction/start.windsurf.vim
 
@@ -288,16 +287,6 @@ vim -u NONE -c "helptags  $vimIndentLinePath/doc" -c "q"
 # install vim-terraform plugin
 rm -rf "$vimTerraformPath"
 git clone --branch master https://github.com/hashivim/vim-terraform.git --depth=1"$vimTerraformPath"
-
-# install coc-nvim
-rm -rf "$vimCocVimPath"
-git clone --branch release https://github.com/neoclide/coc.nvim.git --depth=1 "$vimCocVimPath"
-vim -c "helptags $vimCocVimPath/doc/ | q"
-# copy coc-settings.json
-cp -f .vim/coc-settings.json "$HOME"/.vim/
-cp -f .coc.vimrc "$HOME"/
-# install coc language servers
-vim -c "CocInstall coc-markdownlint coc-tsserver coc-json coc-html coc-css coc-pyright coc-yaml | q"
 
 # install terraform-lsp
 if [[ ! -x "$HOME"/bin/terraform-lsp ]]; then
