@@ -10,7 +10,7 @@ send-keys 'uu' C-m
 # select the main pane to the left.
 select-pane -t 0
 # create a new pane on the bottom using 80% of the height.
-split-window -v -l 80%
+split-window -v -l 85%
 # create new pane along bottom of the large pane
 split-window -v -l 17%
 # create new pane using half of bottom pane for running chromium command
