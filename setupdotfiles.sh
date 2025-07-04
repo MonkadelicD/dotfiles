@@ -9,6 +9,16 @@
 # variable containing line to source customized bash script
 dtfls_rc_add="[ -r ~/.bashrc.sh ] && source ~/.bashrc.sh"
 
+# determine if this is a desktop or server system
+if [[ -n "$XDG_CURRENT_DESKTOP" ]] || [[ -n "$XDG_SESSION_DESKTOP" ]]; then
+  echo "This device is likely a desktop or laptop."
+  is_desktop=true
+else
+  echo "This device is likely a server."
+  is_desktop=false
+fi
+
+# If it's a GNOME desktop, get the default profile
 if [[ $XDG_CURRENT_DESKTOP =~ .*gnome.* ]]; then
   PROFILE_ID=$(gsettings get org.gnome.Terminal.ProfilesList default)
 fi
@@ -43,9 +53,11 @@ script_dir=$(dirname "$0")
 
 # VIM paths
 vimIndentLinePath="$HOME"/.vim/pack/vendor/start/indentLine
-vimTerraformPath="$HOME"/.vim/pack/plugins/start/vim-terraform
 vimDimColorSchemePath="$HOME"/.vim/pack/plugins/start/vim-dim
-vimWindsurfPath="$HOME"/.vim/pack/Exafunction/start.windsurf.vim
+if [ "$is_desktop" == true ]; then
+  vimTerraformPath="$HOME"/.vim/pack/plugins/start/vim-terraform
+  vimWindsurfPath="$HOME"/.vim/pack/Exafunction/start/windsurf.vim
+fi
 
 ## END VARIABLES
 
@@ -113,15 +125,17 @@ if [[ ! -x /usr/bin/vim ]]; then
   fi
 fi
 
-# Ensure vim-gtk3 is installed
-if [ "$pkg_mngr" == apt ] && [[ ! -x /usr/bin/vim.gtk3 ]]; then
-  # install wtih apt or dnf
-  run_apt vim-gtk3
-# look for vimx in rpm distros
-elif [ "$pkg_mngr" == dnf ] && [[ ! -x /usr/bin/vimx ]]; then
-  run_dnf vim-X11
-elif [ "$pkg_mngr" == yum ] && [[ ! -x /usr/bin/vimx ]]; then
-  run_yum vim-X11
+# Ensure vim-gtk3 is installed only on desktops
+if [ "$is_desktop" == true ]; then
+  if [ "$pkg_mngr" == apt ] && [[ ! -x /usr/bin/vim.gtk3 ]]; then
+    # install wtih apt or dnf
+    run_apt vim-gtk3
+  # look for vimx in rpm distros
+  elif [ "$pkg_mngr" == dnf ] && [[ ! -x /usr/bin/vimx ]]; then
+    run_dnf vim-X11
+  elif [ "$pkg_mngr" == yum ] && [[ ! -x /usr/bin/vimx ]]; then
+    run_yum vim-X11
+  fi
 fi
 
 # Ensure tmux is installed
@@ -226,9 +240,11 @@ fi
 
 ## START GNOME-TERMINAL CUSTOMIZATIONS
 
-# set gnome-terminal palette to modified solarized colors
-if [ -z "$PROFILE_ID" ]; then
-  gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:$PROFILE_ID/ palette "['#171421', '#c01c28', '#26a269', '#a2734c', '#12488b', '#a347ba', '#2aa1b3', '#d0cfcc', '#5e5c64', '#f66151', '#33da7a', '#e9ad0c', '#2a7bde', '#c061cb', '#33c7de', '#ffffff']"
+# set gnome-terminal palette to modified solarized colors if device has GNOME desktop
+if [ "$is_desktop" == true ]; then
+  if [ -z "$PROFILE_ID" ]; then
+    gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:$PROFILE_ID/ palette "['#171421', '#c01c28', '#26a269', '#a2734c', '#12488b', '#a347ba', '#2aa1b3', '#d0cfcc', '#5e5c64', '#f66151', '#33da7a', '#e9ad0c', '#2a7bde', '#c061cb', '#33c7de', '#ffffff']"
+  fi
 fi
 
 ## END GNOME-TERMINAL CUSTOMIZATIONS
@@ -256,19 +272,22 @@ fi
 
 ## BEGIN VIM CUSTOMIZATIONS
 
-# copy vimserver script for ranger
-if [ ! -d "$HOME"/.local/bin ]; then
-  mkdir -p "$HOME"/.local/bin
-fi
-cp vimserver "$HOME"/.local/bin
+# For desktops setup VIM IDE
+if [ "$is_desktop" == true ]; then
+  # copy vimserver script for ranger
+  if [ ! -d "$HOME"/.local/bin ]; then
+    mkdir -p "$HOME"/.local/bin
+  fi
+  cp vimserver "$HOME"/.local/bin
 
-# create ranger configs
-ranger --copy-config=all 2>&1 >/dev/null
+  # create ranger configs
+  ranger --copy-config=all 2>&1 >/dev/null
 
-# setup ranger to use vimserver for opening text files
-sed -i 's/\${VISUAL:-\$EDITOR} --/vimserver/g' ~/.config/ranger/rifle.conf
-sed -i 's/\(editor, ext [^ ]*\)\(.*$\)/\1|yml|yaml\2/' ~/.config/ranger/rifle.conf
-sed -i 's/\(^set column_ratios \).*$/\11,5,1/' ~/.config/ranger/rc.conf
+  # setup ranger to use vimserver for opening text files
+  sed -i 's/\${VISUAL:-\$EDITOR} --/vimserver/g' ~/.config/ranger/rifle.conf
+  sed -i 's/\(editor, ext [^ ]*\)\(.*$\)/\1|yml|yaml\2/' ~/.config/ranger/rifle.conf
+  sed -i 's/\(^set column_ratios \).*$/\11,5,1/' ~/.config/ranger/rc.conf
+if
 
 # if .vim directory is missing create it and the vendor and plugins directory trees
 if [ ! -d "$HOME"/.vim ]; then
@@ -284,18 +303,21 @@ rm -rf "$vimIndentLinePath"
 git clone --branch master https://github.com/Yggdroot/indentLine.git --depth=1 "$vimIndentLinePath"
 vim -u NONE -c "helptags  $vimIndentLinePath/doc" -c "q"
 
-# install vim-terraform plugin
-rm -rf "$vimTerraformPath"
-git clone --branch master https://github.com/hashivim/vim-terraform.git --depth=1"$vimTerraformPath"
+# Setup VIM terraform and Windsurf for desktops only
+if [ "$is_desktop" == true ]; then
+  # install vim-terraform plugin
+  rm -rf "$vimTerraformPath"
+  git clone --branch master https://github.com/hashivim/vim-terraform.git --depth=1 "$vimTerraformPath"
 
-# install terraform-lsp
-if [[ ! -x "$HOME"/bin/terraform-lsp ]]; then
-  wget -qO- https://github.com/juliosueiras/terraform-lsp/releases/download/v0.0.12/terraform-lsp_0.0.12_linux_amd64.tar.gz | tar -xzf - -C "$HOME"/bin terraform-lsp
+  # install terraform-lsp
+  if [[ ! -x "$HOME"/bin/terraform-lsp ]]; then
+    wget -qO- https://github.com/juliosueiras/terraform-lsp/releases/download/v0.0.12/terraform-lsp_0.0.12_linux_amd64.tar.gz | tar -xzf - -C "$HOME"/bin terraform-lsp
+  fi
+
+  # install windsurf.vim plugin
+  rm -rf "$vimWindsurfPath"
+  git clone --branch main https://github.com/Exafunction/windsurf.vim --depth=1 "$vimWindsurfPath"
 fi
-
-# install windsurf.vim plugin
-rm -rf "$vimWindsurfPath"
-git clone --branch main --depth=1 https://github.com/Exafunction/windsurf.vim "$vimWindsurfPath"
 
 # copy vimrc file if present
 if [ -f .vimrc ]; then
