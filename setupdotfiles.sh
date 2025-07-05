@@ -28,13 +28,13 @@ dtfls_mng_head="### BEGIN DOTFILES MANAGED BLOCK"
 dtfls_mng_tail="### END DOTFILES MANAGED BLOCK"
 
 # Get OS info to determine package manager
-for release_file in $(ls /etc/*release); do
+for release_file in /etc/*release; do
   echo "Getting release info from... $release_file"
   if [ "${release_file#*"centos"}" != "$release_file" ]; then
     pkg_mngr="yum"
     ID=centos
   fi
-  if grep "ID=" $release_file ; then
+  if grep "ID=" "$release_file" ; then
     source "$release_file"
   fi
 done
@@ -106,7 +106,7 @@ if [[ ! $(command -v node) ]]; then
     export NVM_DIR="$HOME/.nvm" && rm -rf "$NVM_DIR" && (
     git clone https://github.com/nvm-sh/nvm.git "$NVM_DIR"
     cd "$NVM_DIR"
-    git checkout `git describe --abbrev=0 --tags --match "v[0-9]*" $(git rev-list --tags --max-count=1)`
+    git checkout $(git describe --abbrev=0 --tags --match "v[0-9]*" $(git rev-list --tags --max-count=1))
     ) && \. "$NVM_DIR/nvm.sh"
   fi
   # install latest LTS node
@@ -208,17 +208,17 @@ if [ "${#bashrc_configs[@]}" -gt 0 ]; then
     grep -q "$dtfls_mng_head" "$HOME"/.bashrc
     bashrc_already_modified=$?
     if [ "$bashrc_already_modified" -gt 0 ]; then
-      echo "$dtfls_mng_head" >> "$HOME"/.bashrc
-      echo "$dtfls_rc_add" >> "$HOME"/.bashrc
-      echo "$dtfls_mng_tail" >> "$HOME"/.bashrc
+      { echo "$dtfls_mng_head"; \
+      echo "$dtfls_rc_add"; \
+      echo "$dtfls_mng_tail"; } >> "$HOME"/.bashrc
     else
       # delete managed block if found
       sed -i "/$dtfls_mng_head/,/$dtfls_mng_tail/{/.*/d;}" "$HOME"/.bashrc
       # write the managed block back in with header and footer markers
-      echo "$dtfls_mng_head" >> "$HOME"/.bashrc
-      echo "# source my custom bash stuffs" >> "$HOME"/.bashrc
-      echo "$dtfls_rc_add" >> "$HOME"/.bashrc
-      echo "$dtfls_mng_tail" >> "$HOME"/.bashrc
+      { echo "$dtfls_mng_head"; \
+      echo "# source my custom bash stuffs"; \
+      echo "$dtfls_rc_add"; \
+      echo "$dtfls_mng_tail"; } >> "$HOME"/.bashrc
     fi
   fi
 fi
@@ -243,7 +243,7 @@ fi
 # set gnome-terminal palette to modified solarized colors if device has GNOME desktop
 if [ "$is_desktop" == true ]; then
   if [ -z "$PROFILE_ID" ]; then
-    gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:$PROFILE_ID/ palette "['#171421', '#c01c28', '#26a269', '#a2734c', '#12488b', '#a347ba', '#2aa1b3', '#d0cfcc', '#5e5c64', '#f66151', '#33da7a', '#e9ad0c', '#2a7bde', '#c061cb', '#33c7de', '#ffffff']"
+    gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:"$PROFILE_ID"/ palette "['#171421', '#c01c28', '#26a269', '#a2734c', '#12488b', '#a347ba', '#2aa1b3', '#d0cfcc', '#5e5c64', '#f66151', '#33da7a', '#e9ad0c', '#2a7bde', '#c061cb', '#33c7de', '#ffffff']"
   fi
 fi
 
@@ -252,7 +252,7 @@ fi
 ## START TMUX CUSTOMIZATIONS
 
 # Create an array of tmux config files
-tmux_configs=($(ls -1d .tmux*))
+tmux_configs=( .tmux* )
 
 # Find all tmux related stuff
 if [ "${#tmux_configs[@]}" -gt 0 ]; then
@@ -281,13 +281,13 @@ if [ "$is_desktop" == true ]; then
   cp vimserver "$HOME"/.local/bin
 
   # create ranger configs
-  ranger --copy-config=all 2>&1 >/dev/null
+  ranger --copy-config=all > /dev/null 2>&1
 
   # setup ranger to use vimserver for opening text files
   sed -i 's/\${VISUAL:-\$EDITOR} --/vimserver/g' ~/.config/ranger/rifle.conf
   sed -i 's/\(editor, ext [^ ]*\)\(.*$\)/\1|yml|yaml\2/' ~/.config/ranger/rifle.conf
   sed -i 's/\(^set column_ratios \).*$/\11,5,1/' ~/.config/ranger/rc.conf
-if
+fi
 
 # if .vim directory is missing create it and the vendor and plugins directory trees
 if [ ! -d "$HOME"/.vim ]; then
