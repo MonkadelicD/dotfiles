@@ -324,6 +324,11 @@ if [ -f .vimrc ]; then
   cp -f .vimrc "$HOME"/
 fi
 
+# copy gvimrc file if present and on desktop
+if [ -f .gvimrc ] && [ "$is_desktop" == true ]; then
+  cp -f .gvimrc "$HOME"/
+fi
+
 ## END VIM CUSTOMIZATIONS
 echo "All done!"
 echo
