@@ -8,7 +8,7 @@ if [[ $ID == "ubuntu" ]] || [[ $ID == "debian" ]] || [[ $ID == "linuxmint" ]]; t
 	alias uu='echo "Updating package repositories..."; sudo apt update && echo "Performing dist-upgrade..."; sudo apt -y upgrade && echo "Removing unecessary packages..."; sudo apt -y autoremove && echo "Cleaning up local package repositories..."; sudo apt -y autoclean; sudo snap refresh'
 elif [[ $ID == "fedora" ]] || [[ $ID == "rhel" ]] || [[ $ID == "rocky" ]]; then
   alias uu='echo "Updating package repositories..."; sudo dnf check-update && echo "Performing package upgrades..."; sudo dnf upgrade -y && echo "Removing unecessary packages..."; sudo dnf autoremove -y'
-  if [[ -n "$XDG_CURRENT_DESKTOP" ]] || [[ -n "$XDG_SESSION_DESKTOP" ]];
+  if [[ -n "$XDG_CURRENT_DESKTOP" ]] || [[ -n "$XDG_SESSION_DESKTOP" ]]; then
     alias vim='vimx'
   fi
 fi
