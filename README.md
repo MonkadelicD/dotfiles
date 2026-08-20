@@ -13,10 +13,10 @@ Last is custom settings in .vimrc and some plugins: [vim-dim (color theme)](http
 
 ## Instructions for use
 1. Clone this repo to your \*nix system
-        git clone https://github.com/monkadelicd/dotfiles.git --depth 1
+        `git clone https://github.com/monkadelicd/dotfiles.git --depth 1`
 2. cd to dotfiles directory
-        cd dotfiles
+        `cd dotfiles`
 3. run setupdotfiles.sh
-        ./setupdotfiles.sh
+        `./setupdotfiles.sh`
 4. source the new bashrc stuff
-        source ~/.bashrc.sh
+        `source ~/.bashrc.sh`
