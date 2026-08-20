@@ -12,11 +12,11 @@ After setting up the bash stuff it moves on to tmux configs. A custom tmux theme
 Last is custom settings in .vimrc and some plugins: [vim-dim (color theme)](https://github.com/jeffkreeftmeijer/vim-dim), [indnetLine](https://github.com/Yggdroot/indentLine), [vim-terraform](https://github.com/hashivim/vim-terraform), and [windsurf.vim](https://github.com/Exafunction/windsurf.vim)
 
 ## Instructions for use
-1. Clone this repo to your \*nix system
-        `git clone https://github.com/monkadelicd/dotfiles.git --depth 1`
-2. cd to dotfiles directory
-        `cd dotfiles`
-3. run setupdotfiles.sh
-        `./setupdotfiles.sh`
-4. source the new bashrc stuff
-        `source ~/.bashrc.sh`
+1. Clone this repo to your \*nix system  
+    `git clone https://github.com/monkadelicd/dotfiles.git --depth 1`
+2. cd to dotfiles directory  
+    `cd dotfiles`
+3. run setupdotfiles.sh  
+    `./setupdotfiles.sh`  
+4. source the new bashrc stuff  
+    `source ~/.bashrc.sh`
