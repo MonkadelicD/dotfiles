@@ -4,6 +4,9 @@ if [[ -e /etc/os-release ]]; then
 	os="$ID"
 fi
 
+# Get the hostname of the current machine
+thishost=$(hostname)
+
 if [[ $ID == "ubuntu" ]] || [[ $ID == "debian" ]] || [[ $ID == "linuxmint" ]]; then
 	alias uu='echo "Updating package repositories..."; sudo apt update && echo "Performing dist-upgrade..."; sudo apt -y upgrade && echo "Removing unecessary packages..."; sudo apt -y autoremove && echo "Cleaning up local package repositories..."; sudo apt -y autoclean; sudo snap refresh'
 elif [[ $ID == "fedora" ]] || [[ $ID == "rhel" ]] || [[ $ID == "rocky" ]]; then
@@ -33,3 +36,9 @@ alias gitup='git remote update --prune; git pull'
 alias k='kubectl'
 alias kx='kubectx'
 alias kn='kubens'
+
+# Set aliases for mymount utility if on main machine
+if [[ $thishost == "DSMAINUBUNTU" ]]; then
+  alias mymount="sudo -E mymount"
+  alias myunmount="sudo -E myunmount"
+fi
