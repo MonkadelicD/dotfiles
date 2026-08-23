@@ -37,6 +37,8 @@ alias k='kubectl'
 alias kx='kubectx'
 alias kn='kubens'
 
-# Set aliases for mymount utility
-alias mymount="sudo -E mymount"
-alias myunmount="sudo -E myunmount"
+# Set aliases for mymount utility if on main machine
+if [[ $thishost == "DSMAINUBUNTU" ]]; then
+  alias mymount="sudo -E mymount"
+  alias myunmount="sudo -E myunmount"
+fi
