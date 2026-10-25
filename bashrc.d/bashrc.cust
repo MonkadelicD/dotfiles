@@ -54,3 +54,14 @@ fi
 if [ -f /usr/local/bin/helm ]; then
     source <(helm completion bash)
 fi
+
+# Setup codex env for main pc
+if [ -f ${HOME}/.local/bin/codex ]; then
+    # create codex function
+    codex() {
+        if [ -z "$BW_SESSION" ]; then
+            export BW_SESSION=$(bw unlock --raw)
+        fi
+        WANDB_API_KEY=$(bw get password "WandB API Key") \
+          command codex -c model_provider="wandb" "$@"
+    }
